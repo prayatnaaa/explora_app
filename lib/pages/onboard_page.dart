@@ -1,5 +1,7 @@
+import 'package:explora_app/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:explora_app/contents/onboard_content.dart';
 
 class OnBoardPage extends StatefulWidget {
   const OnBoardPage({super.key});
@@ -9,36 +11,101 @@ class OnBoardPage extends StatefulWidget {
 }
 
 class _OnBoardPageState extends State<OnBoardPage> {
+  int currentIndex = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: 0);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Padding(
-        padding: const EdgeInsets.only(right: 20, left: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Image(image: AssetImage("assets/motorcycle.png")),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Explore the\nworld easily",
-                maxLines: 2,
-                style: GoogleFonts.montserrat(
-                    fontSize: 36, fontWeight: FontWeight.bold),
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+              child: PageView.builder(
+            controller: _pageController,
+            itemCount: data.length,
+            onPageChanged: (int index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            itemBuilder: (_, i) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 20, left: 20),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.only(bottom: 20),
+                          child: Image(image: AssetImage(data[i].image))),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          data[i].description,
+                          maxLines: 2,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 36, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          data[i].text,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 24, fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:
+                List.generate(data.length, (index) => buildDot(index, context)),
+          ),
+          Container(
+            height: 60,
+            margin: const EdgeInsets.all(40),
+            width: double.infinity,
+            child: ElevatedButton(
+              child:
+                  Text(currentIndex == data.length - 1 ? "Continue" : "Next"),
+              onPressed: () {
+                if (currentIndex == data.length - 1) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (_) => const WelcomePage()));
+                }
+                _pageController.nextPage(
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.bounceIn);
+              },
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "To your desire",
-                style: GoogleFonts.montserrat(
-                    fontSize: 24, fontWeight: FontWeight.w300),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     ));
+  }
+
+  buildDot(int index, BuildContext context) {
+    return Container(
+      height: 10,
+      width: currentIndex == index ? 25 : 10,
+      margin: const EdgeInsets.only(right: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).primaryColor,
+      ),
+    );
   }
 }
