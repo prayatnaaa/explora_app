@@ -5,7 +5,7 @@ class OnBoarding {
       {required this.image, required this.description, required this.text});
 }
 
-final List contents = [
+final List data = [
   OnBoarding(
       image: "assets/motorcycle.png",
       description: "Explore the world easily",
