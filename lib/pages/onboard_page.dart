@@ -79,15 +79,19 @@ class _OnBoardPageState extends State<OnBoardPage> {
             margin: const EdgeInsets.all(40),
             width: double.infinity,
             child: ElevatedButton(
-              child:
-                  Text(currentIndex == data.length - 1 ? "Continue" : "Next"),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF9292FD)),
+              child: Text(
+                currentIndex == data.length - 1 ? "Continue" : "Next",
+                style: const TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 if (currentIndex == data.length - 1) {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (_) => const WelcomePage()));
                 }
                 _pageController.nextPage(
-                    duration: const Duration(seconds: 1),
+                    duration: const Duration(milliseconds: 100),
                     curve: Curves.bounceIn);
               },
             ),
