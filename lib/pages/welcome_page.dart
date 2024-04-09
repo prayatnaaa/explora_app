@@ -1,3 +1,5 @@
+import 'package:explora_app/pages/login_page.dart';
+import 'package:explora_app/pages/regiter_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,7 +29,50 @@ class _WelcomePageState extends State<WelcomePage> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
-                const Image(image: AssetImage("assets/logo.png"))
+                const Image(image: AssetImage("assets/logo.png")),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
+              child: Text(
+                "Explora is an UI template design that can be found in Figma. I, Tude Prayatna, use this template for my Mobile Programming course. I'm using flutter, a Dart Language's Framework, to duplicate this template.",
+                style:
+                    GoogleFonts.montserrat(color: Colors.white, fontSize: 15),
+                textAlign: TextAlign.justify,
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(top: 100, bottom: 10),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const RegisterPage();
+                      }));
+                    },
+                    child: const Text("Create account"))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Already have an account? ",
+                  style:
+                      GoogleFonts.montserrat(color: Colors.white, fontSize: 13),
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const LoginPage();
+                      }));
+                    },
+                    child: Text(
+                      "Click here",
+                      style: GoogleFonts.montserrat(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 13),
+                    ))
               ],
             )
           ],
