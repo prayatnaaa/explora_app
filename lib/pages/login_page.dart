@@ -1,3 +1,5 @@
+import 'package:explora_app/pages/home_page.dart';
+import 'package:explora_app/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,6 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
             child: TextField(
+              controller: emailController,
               style: GoogleFonts.montserrat(),
               decoration: const InputDecoration(
                   hintText: "Enter your email",
@@ -57,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
             child: TextField(
+              controller: passwordController,
               style: GoogleFonts.montserrat(),
               decoration: const InputDecoration(
                   hintText: "Password",
@@ -93,7 +100,11 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               onPressed: () {
-                Navigator.pop(context);
+                if (emailController.text == "tude") {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const HomePage();
+                  }));
+                }
               },
             ),
           ),
@@ -106,12 +117,20 @@ class _LoginPageState extends State<LoginPage> {
                   "New Member? ",
                   style: GoogleFonts.montserrat(fontSize: 13),
                 ),
-                Text(
-                  "Register now",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFF6C63FF)),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const RegisterPage();
+                    }));
+                  },
+                  child: Text(
+                    "Register now",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFF6C63FF)),
+                  ),
                 ),
               ],
             ),

@@ -1,5 +1,5 @@
 import 'package:explora_app/pages/login_page.dart';
-import 'package:explora_app/pages/regiter_page.dart';
+import 'package:explora_app/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

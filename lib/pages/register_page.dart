@@ -1,3 +1,5 @@
+import 'package:explora_app/pages/home_page.dart';
+import 'package:explora_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,6 +11,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController verifyPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
             child: TextField(
+              controller: emailController,
               style: GoogleFonts.montserrat(),
               decoration: const InputDecoration(
                   hintText: "Enter your email",
@@ -57,22 +63,24 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
             child: TextField(
-              style: GoogleFonts.montserrat(),
-              decoration: const InputDecoration(
-                  hintText: "Enter your email",
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      borderSide: BorderSide(color: Color(0xFF6C63FF)))),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-            child: TextField(
+              controller: passwordController,
               style: GoogleFonts.montserrat(),
               decoration: const InputDecoration(
                   hintText: "Password",
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderSide: BorderSide(color: Color(0xFF6C63FF)))),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            child: TextField(
+              controller: verifyPasswordController,
+              style: GoogleFonts.montserrat(),
+              decoration: const InputDecoration(
+                  hintText: "Verify password",
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   focusedBorder: OutlineInputBorder(
@@ -106,7 +114,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
               onPressed: () {
-                Navigator.pop(context);
+                if (emailController.text == "tude") {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return const HomePage();
+                  }));
+                }
               },
             ),
           ),
@@ -119,12 +132,20 @@ class _RegisterPageState extends State<RegisterPage> {
                   "Already a member? ",
                   style: GoogleFonts.montserrat(fontSize: 13),
                 ),
-                Text(
-                  "Log in",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFF6C63FF)),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const LoginPage();
+                    }));
+                  },
+                  child: Text(
+                    "Log in",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFF6C63FF)),
+                  ),
                 ),
               ],
             ),
