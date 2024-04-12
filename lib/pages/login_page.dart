@@ -15,6 +15,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isPasswordHidden = true;
+  bool errosStatus = false;
+  String errorMessage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,13 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               child: TextField(
+                onTap: () {
+                  setState(() {
+                    errosStatus = false;
+                  });
+                },
                 controller: emailController,
+                keyboardType: TextInputType.emailAddress,
                 style: GoogleFonts.montserrat(),
                 decoration: const InputDecoration(
                     hintText: "Enter your email",
@@ -64,8 +72,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              padding: const EdgeInsets.only(
+                  left: 32, top: 16, right: 32, bottom: 8),
               child: TextField(
+                onTap: () {
+                  setState(() {
+                    errosStatus = false;
+                  });
+                },
                 obscureText: isPasswordHidden,
                 controller: passwordController,
                 style: GoogleFonts.montserrat(),
@@ -87,6 +101,20 @@ class _LoginPageState extends State<LoginPage> {
                         borderSide: BorderSide(color: Color(0xFF6C63FF)))),
               ),
             ),
+            Container(
+                margin: const EdgeInsets.only(left: 40),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Visibility(
+                      visible: errosStatus,
+                      child: Text(
+                        errorMessage,
+                        style: GoogleFonts.montserrat(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red),
+                      ),
+                    ))),
             Container(
               margin: const EdgeInsets.only(top: 80),
               width: 300,
@@ -119,6 +147,12 @@ class _LoginPageState extends State<LoginPage> {
                         MaterialPageRoute(builder: (context) {
                       return const HomePage();
                     }));
+                  } else {
+                    setState(() {
+                      errosStatus = true;
+                    });
+                    errorMessage =
+                        "Invalid. Please make sure everything is correct!";
                   }
                 },
               ),
