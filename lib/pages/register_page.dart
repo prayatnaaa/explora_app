@@ -55,6 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
               child: TextField(
+                keyboardType: TextInputType.emailAddress,
                 onTap: () {
                   setState(() {
                     errorStatus = false;
