@@ -1,4 +1,4 @@
-import 'package:explora_app/pages/onboard_page.dart';
+import 'package:explora_app/pages/see_places_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,10 +28,10 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) {
-                    return const OnBoardPage();
+                    return const SeePlacesPage();
                   }));
                 },
-                child: const Text("Back to the start"))
+                child: const Text("See Places"))
           ],
         ),
       ),
