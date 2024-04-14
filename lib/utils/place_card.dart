@@ -1,3 +1,4 @@
+import 'package:explora_app/contents/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,22 +13,25 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var fitWidth = MediaQuery.of(context).size.width;
+    final fitWidth = MediaQuery.of(context).size.width;
+    final fitHeight = MediaQuery.of(context).size.height;
     return Container(
         margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(4),
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
             borderRadius: const BorderRadius.all(Radius.circular(10))),
-        width: fitWidth,
-        height: 150,
+        constraints: BoxConstraints(
+            maxHeight: 200, minHeight: 150, maxWidth: fitWidth, minWidth: 150),
         child: Row(
           children: [
             Container(
+              decoration: BoxDecoration(
+                  color: themeColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
               margin: const EdgeInsets.only(right: 10),
-              width: 150,
-              height: 200,
-              color: Colors.red,
+              width: fitWidth / 3,
+              height: fitHeight / 4,
               child: Image.asset(images),
             ),
             Expanded(
@@ -50,20 +54,20 @@ class PlaceCard extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "Visit",
-                          style: GoogleFonts.montserrat(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                        const Icon(Icons.location_on),
-                      ],
-                    ),
-                  )
+                ],
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Visit",
+                    style: GoogleFonts.montserrat(
+                        fontSize: 12, fontWeight: FontWeight.bold),
+                  ),
+                  const Icon(Icons.location_on),
                 ],
               ),
             )

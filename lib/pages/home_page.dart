@@ -1,3 +1,4 @@
+import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/pages/see_places_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,13 +26,14 @@ class HomePage extends StatelessWidget {
               textAlign: TextAlign.justify,
             ),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: themeColor),
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const SeePlacesPage();
                   }));
                 },
-                child: const Text("See Places"))
+                child: Text("See Places",
+                    style: GoogleFonts.montserrat(color: Colors.white)))
           ],
         ),
       ),
