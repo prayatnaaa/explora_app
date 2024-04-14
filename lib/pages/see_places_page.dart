@@ -1,9 +1,7 @@
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/contents/place_card_content.dart';
 import 'package:explora_app/utils/place_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SeePlacesPage extends StatelessWidget {
   const SeePlacesPage({super.key});
