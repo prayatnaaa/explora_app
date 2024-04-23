@@ -1,6 +1,5 @@
-import 'package:explora_app/pages/home_page.dart';
-import 'package:explora_app/pages/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -17,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordHidden = true;
   bool errosStatus = false;
   String errorMessage = "";
+  final storage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +141,12 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 onPressed: () {
-                  if (EmailValidator.validate(emailController.text) &&
+                  if (emailController.text != storage.read("email")) {
+                    setState(() {
+                      errosStatus = true;
+                    });
+                    errorMessage = "TOLOL";
+                  } else if (EmailValidator.validate(emailController.text) &&
                       passwordController.text.isNotEmpty) {
                     Navigator.pushNamed(context, '/menu');
                   } else {

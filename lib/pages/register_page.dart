@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:explora_app/pages/home_page.dart';
-import 'package:explora_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -19,6 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isVerifyPassHidden = true;
   bool errorStatus = false;
   String errorMesage = "";
+  final storage = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +177,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       errorStatus = true;
                     });
                     errorMesage = "Invalid. Please fill all the fields!";
-                  } else if (!EmailValidator.validate(emailController.text)) {
+                  }
+                  if (!EmailValidator.validate(emailController.text)) {
                     setState(() {
                       errorStatus = true;
                     });
@@ -197,6 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                     errorMesage = "Please match your passwords!";
                   } else {
+                    storage.write("email", emailController.text);
                     Navigator.pushReplacementNamed(context, '/menu');
                   }
                 },

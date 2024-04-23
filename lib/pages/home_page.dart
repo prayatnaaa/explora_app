@@ -1,5 +1,4 @@
 import 'package:explora_app/contents/colors.dart';
-import 'package:explora_app/pages/see_places_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

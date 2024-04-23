@@ -1,4 +1,3 @@
-import 'package:explora_app/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:explora_app/contents/onboard_content.dart';
