@@ -46,10 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   padding: const EdgeInsets.only(top: 100, bottom: 10),
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const RegisterPage();
-                        }));
+                        Navigator.pushNamed(context, '/register');
                       },
                       child: const Text("Create account"))),
               Row(
@@ -62,10 +59,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const LoginPage();
-                        }));
+                        Navigator.pushNamed(context, '/login');
                       },
                       child: Text(
                         "Click here",

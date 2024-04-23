@@ -143,10 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   if (EmailValidator.validate(emailController.text) &&
                       passwordController.text.isNotEmpty) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const HomePage();
-                    }));
+                    Navigator.pushNamed(context, '/menu');
                   } else {
                     setState(() {
                       errosStatus = true;
@@ -168,10 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const RegisterPage();
-                      }));
+                      Navigator.pushReplacementNamed(context, '/register');
                     },
                     child: Text(
                       "Register now",

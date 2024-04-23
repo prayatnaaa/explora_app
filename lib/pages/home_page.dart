@@ -28,9 +28,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: themeColor),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const SeePlacesPage();
-                  }));
+                  Navigator.pushNamed(context, '/listUser');
                 },
                 child: Text("See Places",
                     style: GoogleFonts.montserrat(color: Colors.white)))

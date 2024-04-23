@@ -87,8 +87,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
               ),
               onPressed: () {
                 if (currentIndex == data.length - 1) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => const WelcomePage()));
+                  Navigator.pushReplacementNamed(context, '/welcome');
                 }
                 _pageController.nextPage(
                     duration: const Duration(milliseconds: 100),

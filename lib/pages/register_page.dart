@@ -197,10 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                     errorMesage = "Please match your passwords!";
                   } else {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const HomePage();
-                    }));
+                    Navigator.pushReplacementNamed(context, '/menu');
                   }
                 },
               ),
@@ -216,10 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const LoginPage();
-                      }));
+                      Navigator.pushReplacementNamed(context, '/login');
                     },
                     child: Text(
                       "Log in",
