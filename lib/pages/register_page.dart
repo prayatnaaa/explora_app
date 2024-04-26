@@ -199,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     errorMesage = "Please match your passwords!";
                   } else {
                     storage.write("email", emailController.text);
-                    Navigator.pushReplacementNamed(context, '/menu');
+                    Navigator.pushReplacementNamed(context, '/home');
                   }
                 },
               ),

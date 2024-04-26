@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                     errorMessage = "TOLOL";
                   } else if (EmailValidator.validate(emailController.text) &&
                       passwordController.text.isNotEmpty) {
-                    Navigator.pushNamed(context, '/menu');
+                    Navigator.pushNamed(context, '/home');
                   } else {
                     setState(() {
                       errosStatus = true;

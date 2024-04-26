@@ -2,7 +2,7 @@ import 'package:explora_app/pages/home_page.dart';
 import 'package:explora_app/pages/login_page.dart';
 import 'package:explora_app/pages/onboard_page.dart';
 import 'package:explora_app/pages/register_page.dart';
-import 'package:explora_app/pages/see_places_page.dart';
+import 'package:explora_app/pages/menu_page.dart';
 import 'package:explora_app/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const OnBoardPage(),
         '/register': (context) => const RegisterPage(),
         '/login': (context) => const LoginPage(),
-        '/menu': (context) => const HomePage(),
-        '/listUser': (context) => const SeePlacesPage()
+        '/home': (context) => const HomePage(),
+        '/feature': (context) => const MenuPage()
       },
     );
   }
