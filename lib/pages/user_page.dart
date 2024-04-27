@@ -20,6 +20,12 @@ class _UserPageState extends State<UserPage> {
   final _dio = Dio();
   final _apiURL = 'https://mobileapis.manpits.xyz/api';
 
+  @override
+  void initState() {
+    super.initState();
+    goUser();
+  }
+
   void goUser() async {
     try {
       final response = await _dio.get('$_apiURL/user',
@@ -34,9 +40,19 @@ class _UserPageState extends State<UserPage> {
       }
     } on DioException catch (e) {
       if (e.response?.statusCode == 406) {
-        _storage.remove('token');
         Navigator.pushReplacementNamed(context, '/login');
       }
+      print('${e.response} - ${e.response?.statusCode} - ${e.message}');
+    }
+  }
+
+  void goLogOut() async {
+    try {
+      final response = await _dio.get('$_apiURL/logout',
+          options: Options(
+              headers: {'Authorization': 'Bearer ${_storage.read('token')}'}));
+      print(response.data);
+    } on DioException catch (e) {
       print('${e.response} - ${e.response?.statusCode} - ${e.message}');
     }
   }
@@ -58,7 +74,8 @@ class _UserPageState extends State<UserPage> {
             subtitle: Text(userEmail),
           ),
         ),
-        ElevatedButton(onPressed: goUser, child: const Text("See Profile"))
+        ElevatedButton(onPressed: goUser, child: const Text("See Profile")),
+        ElevatedButton(onPressed: goLogOut, child: const Text("Log out"))
       ],
     ));
   }

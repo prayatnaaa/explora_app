@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -11,14 +13,32 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController verifyPasswordController = TextEditingController();
   bool isPasswordHidden = true;
   bool isVerifyPassHidden = true;
   bool errorStatus = false;
   String errorMesage = "";
+  final _storage = GetStorage();
+  final _dio = Dio();
+  final _apiURL = 'https://mobileapis.manpits.xyz/api';
   @override
   Widget build(BuildContext context) {
+    void goRegister(name, email, password) async {
+      try {
+        final response = await _dio.post('$_apiURL/register',
+            data: {'name': name, 'email': email, 'password': password});
+        print(response.data);
+        _storage.write('token', response.data['data']['token']);
+        if (response.statusCode == 200) {
+          Navigator.pushReplacementNamed(context, '/user');
+        }
+      } on DioException catch (e) {
+        print('${e.response} - ${e.response?.statusCode}');
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -48,6 +68,26 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   )
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+              child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                onTap: () {
+                  setState(() {
+                    errorStatus = false;
+                  });
+                },
+                controller: nameController,
+                style: GoogleFonts.montserrat(),
+                decoration: const InputDecoration(
+                    hintText: "Enter your name",
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide(color: Color(0xFF6C63FF)))),
               ),
             ),
             Padding(
@@ -196,7 +236,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                     errorMesage = "Please match your passwords!";
                   } else {
-                    Navigator.pushReplacementNamed(context, '/home');
+                    goRegister(nameController.text, emailController.text,
+                        passwordController.text);
                   }
                 },
               ),
