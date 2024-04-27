@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:email_validator/email_validator.dart';
+
+final _dio = Dio();
+const _apiURL = 'https://mobileapis.manpits.xyz/api';
+final _storage = GetStorage();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,10 +20,26 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordHidden = true;
   bool errosStatus = false;
   String errorMessage = "";
-  final storage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
+    void goLogin(email, password) async {
+      try {
+        final response = await _dio.post('$_apiURL/login',
+            data: {'email': email, 'password': password});
+        print(response.data);
+
+        if (response.statusCode == 200) {
+          await Navigator.pushNamed(context, '/user');
+        }
+
+        _storage.write('token', response.data['data']['token']);
+      } on DioException catch (e) {
+        print('${e.response} - ${e.response?.statusCode}');
+        print(e.message);
+      }
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -128,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Next",
+                      "Login",
                       style: GoogleFonts.montserrat(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -141,21 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 onPressed: () {
-                  if (emailController.text != storage.read("email")) {
-                    setState(() {
-                      errosStatus = true;
-                    });
-                    errorMessage = "TOLOL";
-                  } else if (EmailValidator.validate(emailController.text) &&
-                      passwordController.text.isNotEmpty) {
-                    Navigator.pushNamed(context, '/home');
-                  } else {
-                    setState(() {
-                      errosStatus = true;
-                    });
-                    errorMessage =
-                        "Invalid. Please make sure everything is correct!";
-                  }
+                  goLogin(emailController.text, passwordController.text);
                 },
               ),
             ),
