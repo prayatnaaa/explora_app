@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         print(response.data);
 
         if (response.statusCode == 200) {
-          await Navigator.pushNamed(context, '/user');
+          await Navigator.pushReplacementNamed(context, '/user');
         }
 
         _storage.write('token', response.data['data']['token']);
