@@ -30,10 +30,9 @@ class _LoginPageState extends State<LoginPage> {
         print(response.data);
 
         if (response.statusCode == 200) {
+          _storage.write('token', response.data['data']['token']);
           await Navigator.pushReplacementNamed(context, '/user');
         }
-
-        _storage.write('token', response.data['data']['token']);
       } on DioException catch (e) {
         print('${e.response} - ${e.response?.statusCode}');
         print(e.message);

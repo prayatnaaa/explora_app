@@ -30,9 +30,9 @@ class _RegisterPageState extends State<RegisterPage> {
         final response = await _dio.post('$_apiURL/register',
             data: {'name': name, 'email': email, 'password': password});
         print(response.data);
-        _storage.write('token', response.data['data']['token']);
         if (response.statusCode == 200) {
-          Navigator.pushReplacementNamed(context, '/user');
+          // _storage.write('token', response.data['data']['token']);
+          await Navigator.pushReplacementNamed(context, '/user');
         }
       } on DioException catch (e) {
         print('${e.response} - ${e.response?.statusCode}');

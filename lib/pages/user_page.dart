@@ -42,9 +42,10 @@ class _UserPageState extends State<UserPage> with LogoutModal {
       }
     } on DioException catch (e) {
       if (e.response?.statusCode == 406) {
+        _storage.remove('token');
         Navigator.pushReplacementNamed(context, '/login');
       }
-      print('${e.response} - ${e.response?.statusCode} - ${e.message}');
+      print('${e.response} - ${e.response?.statusCode}');
     }
   }
 
@@ -55,6 +56,7 @@ class _UserPageState extends State<UserPage> with LogoutModal {
               headers: {'Authorization': 'Bearer ${_storage.read('token')}'}));
       print(response.data);
       if (response.statusCode == 200) {
+        _storage.remove('token');
         Navigator.pushReplacementNamed(context, '/login');
       }
     } on DioException catch (e) {
