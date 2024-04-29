@@ -34,6 +34,10 @@ class _LoginPageState extends State<LoginPage> {
           await Navigator.pushReplacementNamed(context, '/user');
         }
       } on DioException catch (e) {
+        setState(() {
+          errorMessage = '${e.response?.data['message']}';
+          errosStatus = true;
+        });
         print('${e.response} - ${e.response?.statusCode}');
         print(e.message);
       }

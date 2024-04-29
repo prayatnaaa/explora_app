@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:explora_app/utils/token_expired_message_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,8 @@ class UserProfilePage extends StatefulWidget {
   State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage> {
+class _UserProfilePageState extends State<UserProfilePage>
+    with TokenExpiredModal {
   String userName = '';
   String userEmail = '';
   final _storage = GetStorage();
@@ -38,7 +40,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
       }
     } on DioException catch (e) {
       if (e.response?.statusCode == 406) {
-        Navigator.pushReplacementNamed(context, '/login');
+        // Navigator.pushReplacementNamed(context, '/login');
+        tokenExpiredModal(context);
       }
       print('${e.response} - ${e.response?.statusCode} - ${e.message}');
     }

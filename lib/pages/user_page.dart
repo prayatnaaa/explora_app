@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/utils/logout_modal.dart';
+import 'package:explora_app/utils/token_expired_message_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +13,8 @@ class UserPage extends StatefulWidget {
   State<UserPage> createState() => _UserPageState();
 }
 
-class _UserPageState extends State<UserPage> with LogoutModal {
+class _UserPageState extends State<UserPage>
+    with LogoutModal, TokenExpiredModal {
   String userName = '';
   String userEmail = '';
   final TextEditingController searchController = TextEditingController();
@@ -42,8 +44,9 @@ class _UserPageState extends State<UserPage> with LogoutModal {
       }
     } on DioException catch (e) {
       if (e.response?.statusCode == 406) {
-        _storage.remove('token');
-        Navigator.pushReplacementNamed(context, '/login');
+        // _storage.remove('token');
+        // Navigator.pushReplacementNamed(context, '/login');
+        tokenExpiredModal(context);
       }
       print('${e.response} - ${e.response?.statusCode}');
     }
@@ -56,7 +59,6 @@ class _UserPageState extends State<UserPage> with LogoutModal {
               headers: {'Authorization': 'Bearer ${_storage.read('token')}'}));
       print(response.data);
       if (response.statusCode == 200) {
-        _storage.remove('token');
         Navigator.pushReplacementNamed(context, '/login');
       }
     } on DioException catch (e) {
