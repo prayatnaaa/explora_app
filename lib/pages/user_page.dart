@@ -145,7 +145,10 @@ class _UserPageState extends State<UserPage> with LogoutModal {
                         backgroundColor: Colors.white,
                         child: IconButton(
                             color: themeColor,
-                            onPressed: goUser,
+                            onPressed: () {
+                              // goUser();
+                              Navigator.pushNamed(context, '/userProfile');
+                            },
                             icon: const Icon(Icons.person)),
                       ),
                     ),
