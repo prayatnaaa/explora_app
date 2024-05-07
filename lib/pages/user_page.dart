@@ -45,8 +45,7 @@ class _UserPageState extends State<UserPage>
     } on DioException catch (e) {
       if (e.response?.statusCode == 406) {
         // _storage.remove('token');
-        // Navigator.pushReplacementNamed(context, '/login');
-        tokenExpiredModal(context);
+        Navigator.pushReplacementNamed(context, '/login');
       }
       print('${e.response} - ${e.response?.statusCode}');
     }
@@ -107,67 +106,67 @@ class _UserPageState extends State<UserPage>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "hello, ",
-                          style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          userName,
-                          style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      userEmail,
-                      style: GoogleFonts.montserrat(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ],
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            userName,
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        userEmail,
+                        style: GoogleFonts.montserrat(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: CircleAvatar(
+                Flexible(
+                  flex: 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                              color: themeColor,
+                              onPressed: () {
+                                // goUser();
+                                Navigator.pushNamed(context, '/userProfile');
+                              },
+                              icon: const Icon(Icons.person)),
+                        ),
+                      ),
+                      CircleAvatar(
                         radius: 20,
                         backgroundColor: Colors.white,
                         child: IconButton(
-                            color: themeColor,
-                            onPressed: () {
-                              // goUser();
-                              Navigator.pushNamed(context, '/userProfile');
-                            },
-                            icon: const Icon(Icons.person)),
+                          color: themeColor,
+                          onPressed: () {
+                            logoutModal(context, goLogOut);
+                          },
+                          icon: const Icon(Icons.logout),
+                        ),
                       ),
-                    ),
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.white,
-                      child: IconButton(
-                        color: themeColor,
-                        onPressed: () {
-                          logoutModal(context, goLogOut);
-                        },
-                        icon: const Icon(Icons.logout),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

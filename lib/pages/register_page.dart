@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:explora_app/utils/success_register_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -11,7 +11,7 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage> with SuccesRegisterModal {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -20,7 +20,6 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isVerifyPassHidden = true;
   bool errorStatus = false;
   String errorMesage = "";
-  final _storage = GetStorage();
   final _dio = Dio();
   final _apiURL = 'https://mobileapis.manpits.xyz/api';
   @override
@@ -31,8 +30,8 @@ class _RegisterPageState extends State<RegisterPage> {
             data: {'name': name, 'email': email, 'password': password});
         print(response.data);
         if (response.statusCode == 200) {
-          // _storage.write('token', response.data['data']['token']);
-          await Navigator.pushReplacementNamed(context, '/user');
+          successRegisterModal(context);
+          await Navigator.pushReplacementNamed(context, '/login');
         }
       } on DioException catch (e) {
         print('${e.response} - ${e.response?.statusCode}');
