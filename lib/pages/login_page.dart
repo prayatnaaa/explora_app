@@ -1,11 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:explora_app/services/api_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-final _dio = Dio();
-const _apiURL = 'https://mobileapis.manpits.xyz/api';
-final _storage = GetStorage();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,35 +11,15 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with UserController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isPasswordHidden = true;
-  bool errosStatus = false;
+  bool errorStatus = false;
   String errorMessage = "";
 
   @override
   Widget build(BuildContext context) {
-    void goLogin(email, password) async {
-      try {
-        final response = await _dio.post('$_apiURL/login',
-            data: {'email': email, 'password': password});
-        print(response.data);
-
-        if (response.statusCode == 200) {
-          _storage.write('token', response.data['data']['token']);
-          await Navigator.pushReplacementNamed(context, '/user');
-        }
-      } on DioException catch (e) {
-        setState(() {
-          errorMessage = '${e.response?.data['message']}';
-          errosStatus = true;
-        });
-        print('${e.response} - ${e.response?.statusCode}');
-        print(e.message);
-      }
-    }
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -79,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextField(
                 onTap: () {
                   setState(() {
-                    errosStatus = false;
+                    errorStatus = false;
                   });
                 },
                 controller: emailController,
@@ -100,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextField(
                 onTap: () {
                   setState(() {
-                    errosStatus = false;
+                    errorStatus = false;
                   });
                 },
                 obscureText: isPasswordHidden,
@@ -129,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Align(
                     alignment: Alignment.topLeft,
                     child: Visibility(
-                      visible: errosStatus,
+                      visible: errorStatus,
                       child: Text(
                         errorMessage,
                         style: GoogleFonts.montserrat(
@@ -164,7 +141,8 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 onPressed: () {
-                  goLogin(emailController.text, passwordController.text);
+                  goLogin(context, emailController.text,
+                      passwordController.text, '/user');
                 },
               ),
             ),

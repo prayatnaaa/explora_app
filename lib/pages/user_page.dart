@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:explora_app/contents/colors.dart';
+import 'package:explora_app/models/member.dart';
+import 'package:explora_app/utils/member_list.dart';
 import 'package:explora_app/utils/logout_modal.dart';
 import 'package:explora_app/utils/token_expired_message_modal.dart';
 import 'package:flutter/material.dart';
@@ -71,108 +75,58 @@ class _UserPageState extends State<UserPage>
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        body: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-          child: TextField(
-            style: GoogleFonts.montserrat(),
-            controller: searchController,
-            decoration: InputDecoration(
-                hintText: "Search...",
-                prefixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {},
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: themeColor, borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      userName,
+                      style: GoogleFonts.montserrat(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.person_3_outlined),
+                      onPressed: () {
+                        logoutModal(context, goLogOut);
+                      },
+                      color: Colors.white,
+                    )
+                  ],
                 ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: themeColor)),
-                enabledBorder:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                suffixIcon: IconButton(
-                    onPressed: () {
-                      searchController.clear();
-                    },
-                    icon: const Icon(Icons.clear))),
-          ),
-        ),
-        Container(
-          width: width,
-          height: height / 4,
-          color: themeColor,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  flex: 2,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            userName,
-                            style: GoogleFonts.montserrat(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        userEmail,
-                        style: GoogleFonts.montserrat(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ],
-                  ),
-                ),
-                Flexible(
-                  flex: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                              color: themeColor,
-                              onPressed: () {
-                                // goUser();
-                                Navigator.pushNamed(context, '/userProfile');
-                              },
-                              icon: const Icon(Icons.person)),
-                        ),
-                      ),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          color: themeColor,
-                          onPressed: () {
-                            logoutModal(context, goLogOut);
-                          },
-                          icon: const Icon(Icons.logout),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 4,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    Member member = Member(
+                        nama: "Ayu Aprilia",
+                        nomor_induk: "030",
+                        alamat: "Denpasar",
+                        tgl_lahir: "18-04-04",
+                        telepon: "081991229131");
+                    //TODO: here are the member list
+                    return MemberList(
+                      member: member,
+                    );
+                  }),
+            )
+          ],
         ),
-      ],
-    ));
+      ),
+      backgroundColor: Colors.grey,
+    );
   }
 }
