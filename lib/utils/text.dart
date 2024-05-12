@@ -18,7 +18,7 @@ class MyText extends StatelessWidget {
     return Text(
       child,
       style: GoogleFonts.montserrat(
-          fontSize: fontSize, fontWeight: fontWeight, color: Colors.white),
+          fontSize: fontSize, fontWeight: fontWeight, color: color),
     );
   }
 }

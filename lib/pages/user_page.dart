@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/models/member.dart';
+import 'package:explora_app/pages/member_page.dart';
 import 'package:explora_app/utils/member_list.dart';
 import 'package:explora_app/utils/logout_modal.dart';
 import 'package:explora_app/utils/token_expired_message_modal.dart';
@@ -106,23 +107,7 @@ class _UserPageState extends State<UserPage>
               ),
             ),
             const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 4,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    Member member = Member(
-                        nama: "Ayu Aprilia",
-                        nomor_induk: "030",
-                        alamat: "Denpasar",
-                        tgl_lahir: "18-04-04",
-                        telepon: "081991229131");
-                    //TODO: here are the member list
-                    return MemberList(
-                      member: member,
-                    );
-                  }),
-            )
+            const MemberPage(),
           ],
         ),
       ),

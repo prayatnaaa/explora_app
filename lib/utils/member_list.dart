@@ -12,33 +12,41 @@ class MemberList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 20),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: themeColor),
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(12), color: white),
       width: 280,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+              child: Icon(
+                Icons.person,
+                color: themeColor,
+                size: 80,
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
             //member name
             Text(
               member.nama,
               style: GoogleFonts.montserrat(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                  fontSize: 20, fontWeight: FontWeight.bold, color: themeColor),
             ),
             //member nomor_induk
             MyText(
-                child: member.nomor_induk,
+                child: member.nama,
                 fontSize: 16,
-                color: white,
-                fontWeight: FontWeight.w500),
+                color: themeColor,
+                fontWeight: FontWeight.bold),
             //member telepon
             MyText(
                 child: member.telepon,
                 fontSize: 12,
-                color: white,
+                color: themeColor,
                 fontWeight: FontWeight.w300)
           ],
         ),
