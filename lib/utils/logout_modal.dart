@@ -43,10 +43,15 @@ mixin LogoutModal {
                     const Divider(
                       color: Colors.grey,
                     ),
-                    Text(
-                      "Cancel",
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500, color: Colors.blue),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Cancel",
+                        style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500, color: Colors.blue),
+                      ),
                     ),
                   ],
                 ),

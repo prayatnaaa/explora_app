@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:dio/dio.dart';
 import 'package:explora_app/contents/colors.dart';
-import 'package:explora_app/models/member.dart';
 import 'package:explora_app/pages/member_page.dart';
-import 'package:explora_app/utils/member_list.dart';
 import 'package:explora_app/utils/logout_modal.dart';
+import 'package:explora_app/utils/text.dart';
 import 'package:explora_app/utils/token_expired_message_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -39,8 +36,6 @@ class _UserPageState extends State<UserPage>
       final response = await _dio.get('$_apiURL/user',
           options: Options(
               headers: {'Authorization': 'Bearer ${_storage.read('token')}'}));
-      print(response.data['data']['user']['name']);
-      print(response.data['data']['expired']);
       if (response.statusCode == 200) {
         setState(() {
           userName = (response.data['data']['user']['name']);
@@ -52,7 +47,6 @@ class _UserPageState extends State<UserPage>
         // _storage.remove('token');
         Navigator.pushReplacementNamed(context, '/login');
       }
-      print('${e.response} - ${e.response?.statusCode}');
     }
   }
 
@@ -61,7 +55,6 @@ class _UserPageState extends State<UserPage>
       final response = await _dio.get('$_apiURL/logout',
           options: Options(
               headers: {'Authorization': 'Bearer ${_storage.read('token')}'}));
-      print(response.data);
       if (response.statusCode == 200) {
         Navigator.pushReplacementNamed(context, '/login');
       }
@@ -72,9 +65,6 @@ class _UserPageState extends State<UserPage>
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -107,7 +97,34 @@ class _UserPageState extends State<UserPage>
               ),
             ),
             const SizedBox(height: 10),
-            const MemberPage(),
+            //TODO here are the add member method
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/member");
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8), color: white),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MyText(
+                          child: "See Member",
+                          fontSize: 20,
+                          color: themeColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Expanded(child: MemberPage()),
           ],
         ),
       ),

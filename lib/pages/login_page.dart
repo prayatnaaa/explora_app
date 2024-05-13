@@ -1,7 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:explora_app/services/api_user.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {

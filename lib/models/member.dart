@@ -7,7 +7,7 @@ class DataMember {
 }
 
 class Member {
-  final int? id;
+  final dynamic id;
   final int nomor_induk;
   final String nama;
   final String alamat;

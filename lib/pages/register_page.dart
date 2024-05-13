@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:explora_app/services/api_user.dart';
 import 'package:explora_app/utils/password_textfield.dart';
-import 'package:explora_app/utils/success_register_modal.dart';
 import 'package:explora_app/utils/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -123,34 +121,41 @@ class _RegisterPageState extends State<RegisterPage> with UserController {
                   });
                 },
                 controller: passwordController),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-              child: TextField(
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
+            //   child: TextField(
+            //     onTap: () {
+            //       setState(() {
+            //         errorStatus = false;
+            //       });
+            //     },
+            //     obscureText: isVerifyPassHidden,
+            //     controller: verifyPasswordController,
+            //     style: GoogleFonts.montserrat(),
+            //     decoration: InputDecoration(
+            //         suffixIcon: IconButton(
+            //             onPressed: () {
+            //               setState(() {
+            //                 isVerifyPassHidden = !isVerifyPassHidden;
+            //               });
+            //             },
+            //             icon: Icon(
+            //                 isVerifyPassHidden ? Icons.lock : Icons.lock_open)),
+            //         hintText: "Verify password",
+            //         enabledBorder: const OutlineInputBorder(
+            //             borderRadius: BorderRadius.all(Radius.circular(20))),
+            //         focusedBorder: const OutlineInputBorder(
+            //             borderRadius: BorderRadius.all(Radius.circular(20)),
+            //             borderSide: BorderSide(color: Color(0xFF6C63FF)))),
+            //   ),
+            // ),
+            PasswordTextField(
                 onTap: () {
                   setState(() {
                     errorStatus = false;
                   });
                 },
-                obscureText: isVerifyPassHidden,
-                controller: verifyPasswordController,
-                style: GoogleFonts.montserrat(),
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isVerifyPassHidden = !isVerifyPassHidden;
-                          });
-                        },
-                        icon: Icon(
-                            isVerifyPassHidden ? Icons.lock : Icons.lock_open)),
-                    hintText: "Verify password",
-                    enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Color(0xFF6C63FF)))),
-              ),
-            ),
+                controller: verifyPasswordController),
             Container(
               margin: const EdgeInsets.only(left: 40),
               child: Align(

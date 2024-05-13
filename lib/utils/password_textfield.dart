@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PasswordTextField extends StatefulWidget {
-  VoidCallback onTap;
+  final VoidCallback onTap;
   final controller;
 
-  PasswordTextField({super.key, required this.onTap, required this.controller});
+  const PasswordTextField(
+      {super.key, required this.onTap, required this.controller});
 
   @override
   State<PasswordTextField> createState() => _PasswordTextFieldState();

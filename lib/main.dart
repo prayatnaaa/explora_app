@@ -1,4 +1,5 @@
 import 'package:explora_app/pages/login_page.dart';
+import 'package:explora_app/pages/member_page.dart';
 import 'package:explora_app/pages/onboard_page.dart';
 import 'package:explora_app/pages/register_page.dart';
 import 'package:explora_app/pages/user_page.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/user': (context) => const UserPage(),
         '/userProfile': (context) => const UserProfilePage(),
+        '/member': (context) => const MemberPage()
       },
     );
   }
