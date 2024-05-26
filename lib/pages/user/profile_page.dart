@@ -1,6 +1,6 @@
 import 'package:explora_app/components/text.dart';
 import 'package:explora_app/data/bloc/user_bloc/user_bloc.dart';
-import 'package:explora_app/data/remote_datasource.dart';
+import 'package:explora_app/data/datasources/member_datasource.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
           userState is UserExit) {
         userBloc.add(UserLoad());
       } else if (userState is UserLoading) {
-        return const Center(child: Text("memek"));
+        return const Center(child: Text("Ba"));
       } else if (userState is UserLoaded) {
         final user = userState.user;
         return Column(

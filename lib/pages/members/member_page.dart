@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
-import 'package:explora_app/data/remote_datasource.dart';
+import 'package:explora_app/data/datasources/member_datasource.dart';
 import 'package:explora_app/helper/member_button.dart';
 import 'package:explora_app/models/member.dart';
 import 'package:explora_app/components/cool_button.dart';
 import 'package:explora_app/components/text.dart';
-import 'package:explora_app/pages/member_profile.dart';
+import 'package:explora_app/pages/members/member_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
-import 'package:explora_app/data/remote_datasource.dart';
-import 'package:explora_app/pages/member_page.dart';
+import 'package:explora_app/data/datasources/member_datasource.dart';
+import 'package:explora_app/pages/members/member_page.dart';
 import 'package:explora_app/components/logout_modal.dart';
 import 'package:explora_app/components/member_snippet.dart';
 import 'package:explora_app/components/text.dart';

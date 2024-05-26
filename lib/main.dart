@@ -1,10 +1,10 @@
-import 'package:explora_app/pages/login_page.dart';
-import 'package:explora_app/pages/member_page.dart';
+import 'package:explora_app/pages/auth_screen/login_page.dart';
+import 'package:explora_app/pages/members/member_page.dart';
 import 'package:explora_app/pages/onboard_page.dart';
-import 'package:explora_app/pages/profile_page.dart';
-import 'package:explora_app/pages/register_page.dart';
-import 'package:explora_app/pages/user_page.dart';
-import 'package:explora_app/pages/user_profile_page.dart';
+import 'package:explora_app/pages/user/profile_page.dart';
+import 'package:explora_app/pages/auth_screen/register_page.dart';
+import 'package:explora_app/pages/user/user_page.dart';
+import 'package:explora_app/pages/user/user_profile_page.dart';
 import 'package:explora_app/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';

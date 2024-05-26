@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:explora_app/data/remote_datasource.dart';
+import 'package:explora_app/data/datasources/member_datasource.dart';
 import 'package:explora_app/models/user.dart';
 import 'package:meta/meta.dart';
 
