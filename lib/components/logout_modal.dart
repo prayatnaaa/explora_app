@@ -8,7 +8,7 @@ mixin LogoutModal {
         builder: (BuildContext context) {
           return Dialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
+                borderRadius: BorderRadius.circular(8.0)),
             child: Container(
               constraints: const BoxConstraints(maxHeight: 200),
               child: Padding(

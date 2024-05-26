@@ -5,12 +5,14 @@ class CoolButton extends StatefulWidget {
   final String text;
   final Color? color;
   final VoidCallback? onTap;
+  Color? textColor = Colors.white;
 
-  const CoolButton(
+  CoolButton(
       {super.key,
       required this.text,
       required this.color,
-      required this.onTap});
+      required this.onTap,
+      this.textColor});
 
   @override
   State<CoolButton> createState() => _CoolButtonState();
@@ -28,7 +30,8 @@ class _CoolButtonState extends State<CoolButton> {
           padding: const EdgeInsets.fromLTRB(28, 10, 28, 10),
           child: Text(
             widget.text,
-            style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
+            style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w600, color: widget.textColor),
           ),
         ),
       ),

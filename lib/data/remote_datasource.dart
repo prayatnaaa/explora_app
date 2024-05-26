@@ -1,10 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:explora_app/models/member.dart';
+import 'package:explora_app/models/user.dart';
 import 'package:get_storage/get_storage.dart';
 
+final _dio = Dio(BaseOptions(baseUrl: 'https://mobileapis.manpits.xyz/api'));
+final _localStorage = GetStorage();
+
 class RemoteDataSource {
-  final _dio = Dio(BaseOptions(baseUrl: 'https://mobileapis.manpits.xyz/api'));
-  final _localStorage = GetStorage();
+  final _auth = Options(
+      headers: {"Authorization": "Bearer ${_localStorage.read("token")}"});
 
   Future<DataMember> getMembers() async {
     final response = await _dio.get('/anggota',
@@ -12,6 +16,18 @@ class RemoteDataSource {
           "Authorization": "Bearer ${_localStorage.read("token")}"
         }));
     return DataMember.fromJson(response.data);
+  }
+
+  Future<DataMember> getMembersById(int id) async {
+    try {
+      final response = await _dio.get('/anggota/$id',
+          options: Options(headers: {
+            "Authorization": "Bearer ${_localStorage.read("token")}"
+          }));
+      return DataMember.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
   }
 
   Future addMember(Member member) async {
@@ -28,8 +44,6 @@ class RemoteDataSource {
             "Authorization": "Bearer ${_localStorage.read("token")}"
           }));
 
-      print(response);
-
       return response;
     } catch (e) {
       print(e.toString());
@@ -37,23 +51,80 @@ class RemoteDataSource {
   }
 
   Future deleteMember(int? id) async {
-    return await _dio.delete("/anggota/$id",
-        options: Options(headers: {
-          "Authorization": "Bearer ${_localStorage.read("token")}"
-        }));
+    try {
+      return await _dio.delete("/anggota/$id",
+          options: Options(headers: {
+            "Authorization": "Bearer ${_localStorage.read("token")}"
+          }));
+    } on DioException catch (e) {
+      print(e.message);
+    }
   }
 
   Future editMember(Member member) async {
-    return await _dio.put("/anggota/${member.id}",
-        data: {
-          "nomor_induk": member.nomor_induk,
-          "nama": member.nama,
-          "alamat": member.alamat,
-          "tgl_lahir": member.tgl_lahir,
-          "telepon": member.telepon
-        },
-        options: Options(headers: {
-          "Authorization": "Bearer ${_localStorage.read("token")}"
-        }));
+    try {
+      return await _dio.put("/anggota/${member.id}",
+          data: {
+            "nomor_induk": member.nomor_induk,
+            "nama": member.nama,
+            "alamat": member.alamat,
+            "tgl_lahir": member.tgl_lahir,
+            "telepon": member.telepon
+          },
+          options: Options(headers: {
+            "Authorization": "Bearer ${_localStorage.read("token")}"
+          }));
+    } on DioException catch (e) {
+      print(e.message);
+    }
+  }
+
+  Future goLogin(User user) async {
+    try {
+      final response = await _dio.post('/login',
+          data: {"email": user.email, "password": user.password},
+          options: _auth);
+
+      return response;
+    } on DioException catch (e) {
+      print(e.message);
+    }
+  }
+
+  Future goRegister(User user) async {
+    try {
+      final response = await _dio.post('/login',
+          data: {
+            "email": user.email,
+            "name": user.name,
+            "password": user.password
+          },
+          options: _auth);
+
+      return response;
+    } on DioException catch (e) {
+      print(e.message);
+    }
+  }
+
+  Future goUser() async {
+    try {
+      final response = await _dio.get('/user',
+          options: Options(headers: {
+            'Authorization': 'Bearer ${_localStorage.read('token')}'
+          }));
+
+      return response;
+    } on DioException catch (e) {
+      print(e.message);
+    }
+  }
+
+  Future goLogout() async {
+    try {
+      return await _dio.get('/logout', options: _auth);
+    } on DioException catch (e) {
+      print(e.message);
+    }
   }
 }

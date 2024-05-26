@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:explora_app/utils/success_register_modal.dart';
+import 'package:explora_app/components/success_register_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 

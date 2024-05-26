@@ -1,3 +1,6 @@
+import 'package:explora_app/contents/colors.dart';
+import 'package:explora_app/components/cool_button.dart';
+import 'package:explora_app/components/text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,22 +15,20 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Image(image: AssetImage("assets/hotBalloon.png")),
+              // const Image(image: AssetImage("assets/hotBalloon.png")),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Explora",
-                    style: GoogleFonts.montserrat(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
+                  MyText(
+                      child: "Explora",
+                      fontSize: 48,
+                      color: white,
+                      fontWeight: FontWeight.w900),
                   const Image(image: AssetImage("assets/logo.png")),
                 ],
               ),
@@ -40,39 +41,47 @@ class _WelcomePageState extends State<WelcomePage> {
                   textAlign: TextAlign.justify,
                 ),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(top: 100, bottom: 10),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/register');
-                      },
-                      child: const Text("Create account"))),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              const SizedBox(
+                height: 24,
+              ),
+              Column(
                 children: [
-                  Text(
-                    "Already have an account? ",
-                    style: GoogleFonts.montserrat(
-                        color: Colors.white, fontSize: 13),
-                  ),
-                  GestureDetector(
+                  CoolButton(
+                      textColor: themeColor,
+                      text: "Register",
+                      color: Colors.white,
                       onTap: () {
-                        Navigator.pushNamed(context, '/login');
-                      },
-                      child: Text(
-                        "Click here",
+                        Navigator.pushReplacementNamed(context, '/register');
+                      }),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Already have an account? ",
                         style: GoogleFonts.montserrat(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 13),
-                      ))
+                            color: Colors.white, fontSize: 13),
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/login');
+                          },
+                          child: Text(
+                            "Click here",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 13),
+                          ))
+                    ],
+                  ),
                 ],
               ),
             ],
           ),
         ),
-      ),
-      backgroundColor: const Color(0xFF6c63ff),
-    );
+        backgroundColor: themeColor);
   }
 }

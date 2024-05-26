@@ -1,6 +1,6 @@
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/models/member.dart';
-import 'package:explora_app/utils/text.dart';
+import 'package:explora_app/components/text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

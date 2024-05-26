@@ -1,10 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:explora_app/contents/colors.dart';
+import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
+import 'package:explora_app/data/remote_datasource.dart';
 import 'package:explora_app/pages/member_page.dart';
-import 'package:explora_app/utils/logout_modal.dart';
-import 'package:explora_app/utils/text.dart';
-import 'package:explora_app/utils/token_expired_message_modal.dart';
+import 'package:explora_app/components/logout_modal.dart';
+import 'package:explora_app/components/member_snippet.dart';
+import 'package:explora_app/components/text.dart';
+import 'package:explora_app/components/token_expired_message_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -85,12 +89,23 @@ class _UserPageState extends State<UserPage>
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.person_3_outlined),
-                      onPressed: () {
-                        logoutModal(context, goLogOut);
-                      },
-                      color: Colors.white,
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.info_outline),
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/profile");
+                          },
+                          color: Colors.white,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.logout_outlined),
+                          onPressed: () {
+                            logoutModal(context, goLogOut);
+                          },
+                          color: Colors.white,
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -107,16 +122,12 @@ class _UserPageState extends State<UserPage>
                     Navigator.pushNamed(context, "/member");
                   },
                   child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8), color: white),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: MyText(
-                          child: "See Member",
-                          fontSize: 20,
-                          color: themeColor,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
+                    child: MyText(
+                        child: "See all members",
+                        fontSize: 16,
+                        color: themeColor,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
@@ -124,11 +135,11 @@ class _UserPageState extends State<UserPage>
             const SizedBox(
               height: 20,
             ),
-            const Expanded(child: MemberPage()),
+            const Expanded(child: MemberSnippet()),
+            const Text("P")
           ],
         ),
       ),
-      backgroundColor: Colors.grey,
     );
   }
 }

@@ -18,6 +18,8 @@ final class MemberEdited extends MemberState {}
 
 final class MemberDeleted extends MemberState {}
 
+final class MemberDetailed extends MemberState {}
+
 final class MemberError extends MemberState {
   final String error;
   MemberError(this.error);
