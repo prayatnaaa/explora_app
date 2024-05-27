@@ -26,29 +26,32 @@ class _TransactionInputState extends State<TransactionInput> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Column(
-        children: [
-          MyText(
-              child: "Transaction",
-              fontSize: 16,
-              color: themeColor,
-              fontWeight: FontWeight.bold),
-          const SizedBox(
-            height: 24,
-          ),
-          MyTextField(
-              onTap: () {},
-              hintText: "Transaction ID",
-              controller: widget.transactionIdController),
-          MyTextField(
-              onTap: () {},
-              hintText: "Amount",
-              controller: widget.amountController),
-          const SizedBox(
-            height: 36,
-          ),
-          CoolButton(text: "Add", color: Colors.green, onTap: widget.onTap)
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            MyText(
+                child: "Transaction",
+                fontSize: 16,
+                color: themeColor,
+                fontWeight: FontWeight.bold),
+            const SizedBox(
+              height: 24,
+            ),
+            MyTextField(
+                onTap: () {},
+                hintText: "Transaction ID",
+                controller: widget.transactionIdController),
+            MyTextField(
+                onTap: () {},
+                hintText: "Amount",
+                controller: widget.amountController),
+            const SizedBox(
+              height: 36,
+            ),
+            CoolButton(text: "Add", color: Colors.green, onTap: widget.onTap)
+          ],
+        ),
       ),
     );
   }

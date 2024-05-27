@@ -31,7 +31,7 @@ class _TransactionListState extends State<TransactionList> {
                 .add(MemberTransaction(id: widget.id));
           } else if (transactionState is TransactionLoaded) {
             final transactions = transactionState.transactions;
-            // final savings = transactionState.saldo;
+            final savings = transactionState.savings;
             return Center(
               child: Container(
                 constraints:
@@ -79,11 +79,11 @@ class _TransactionListState extends State<TransactionList> {
                                 });
                           });
                         }),
-                    // MyText(
-                    //     child: savings.saldo.toString(),
-                    //     fontSize: 16,
-                    //     color: themeColor,
-                    //     fontWeight: FontWeight.bold),
+                    MyText(
+                        child: savings.saldo.toString(),
+                        fontSize: 16,
+                        color: themeColor,
+                        fontWeight: FontWeight.bold),
                     ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,

@@ -19,3 +19,9 @@ class MemberTransaction extends TransactionEvent {
 
   MemberTransaction({required this.id});
 }
+
+class GetSavings extends TransactionEvent {
+  final int id;
+
+  GetSavings({required this.id});
+}

@@ -22,9 +22,9 @@ class TransactionDatasource {
     }
   }
 
-  Future getSavings(int id) async {
+  Future<Saldo> getSavings(int id) async {
     final response = await _dio.get('/saldo/$id', options: _auth);
-    return response.data;
+    return Saldo.fromJson(response.data);
   }
 
   Future addTransaction(int memberId, transactionId, amount) async {

@@ -133,10 +133,9 @@ class _UserPageState extends State<UserPage>
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 5,
             ),
             const Expanded(child: MemberSnippet()),
-            const Text("P")
           ],
         ),
       ),

@@ -9,10 +9,17 @@ final class TransactionAdded extends TransactionState {}
 
 final class TransactionLoading extends TransactionState {}
 
+final class SavingLoaded extends TransactionState {
+  final Saldo savings;
+
+  SavingLoaded(this.savings);
+}
+
 final class TransactionLoaded extends TransactionState {
   final List<Transaction> transactions;
+  final Saldo savings;
 
-  TransactionLoaded(this.transactions);
+  TransactionLoaded(this.transactions, this.savings);
 }
 
 final class TransactionError extends TransactionState {

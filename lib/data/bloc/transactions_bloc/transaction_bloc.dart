@@ -15,6 +15,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       : super(TransactionInitial()) {
     on<MemberTransaction>(_loadTransaction);
     on<AddTransaction>(_addTransaction);
+    on<GetSavings>(_getSavings);
   }
 
   FutureOr<void> _loadTransaction(
@@ -22,10 +23,10 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     emit(TransactionLoading());
     try {
       final result = await transactionDatasource.getTransaction(event.id);
-      // final savings = await transactionDatasource.getSavings(event.id);
-      emit(TransactionLoaded(result.transactions));
+      final savings = await transactionDatasource.getSavings(event.id);
+      emit(TransactionLoaded(result.transactions, savings));
     } on DioException catch (e) {
-      throw Exception(e.error);
+      throw Exception(e.message);
     }
   }
 
@@ -35,6 +36,16 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       await transactionDatasource.addTransaction(
           event.memberId, event.transactionId, event.amount);
       emit(TransactionAdded());
+    } on DioException catch (e) {
+      throw Exception(e.error);
+    }
+  }
+
+  FutureOr<void> _getSavings(
+      GetSavings event, Emitter<TransactionState> emit) async {
+    try {
+      final result = await transactionDatasource.getSavings(event.id);
+      emit(SavingLoaded(result));
     } on DioException catch (e) {
       throw Exception(e.error);
     }
