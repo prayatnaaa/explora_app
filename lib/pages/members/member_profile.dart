@@ -68,50 +68,87 @@ class _MemberProfileState extends State<MemberProfile> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
-                              child: Text(
-                                member.nama,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: themeColor,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            _buildDetailItem(
-                                "ID Number", member.nomor_induk.toString()),
-                            _buildDetailItem("Address", member.alamat),
-                            _buildDetailItem("Birth Date", member.tgl_lahir),
-                            _buildDetailItem("Phone Number", member.telepon),
-                            const SizedBox(height: 24),
-                            Center(
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: themeColor),
-                                onPressed: () {
-                                  _showEditDeleteDialog(member);
-                                },
-                                icon:
-                                    const Icon(Icons.edit, color: Colors.white),
-                                label: MyText(
-                                  child: "Edit / Delete",
-                                  fontSize: 16,
-                                  color: white,
-                                  fontWeight: FontWeight.w500,
+                            Container(
+                              decoration: BoxDecoration(color: themeColor),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          member.nama,
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                            color: white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        MyText(
+                                            child: member.telepon,
+                                            fontSize: 12,
+                                            color: white,
+                                            fontWeight: FontWeight.w500),
+                                        MyText(
+                                            child: " || ",
+                                            fontSize: 12,
+                                            color: white,
+                                            fontWeight: FontWeight.w500),
+                                        MyText(
+                                            child:
+                                                "No Induk: ${member.nomor_induk.toString()}",
+                                            fontSize: 12,
+                                            color: white,
+                                            fontWeight: FontWeight.w500)
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    MyText(
+                                        child:
+                                            "ID\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t: ${member.id}",
+                                        fontSize: 14,
+                                        color: white,
+                                        fontWeight: FontWeight.w500),
+                                    MyText(
+                                        child:
+                                            "Alamat\t\t\t\t\t\t\t\t\t\t\t\t\t: ${member.alamat}",
+                                        fontSize: 14,
+                                        color: white,
+                                        fontWeight: FontWeight.w500),
+                                    MyText(
+                                        child:
+                                            "Tanggal Lahir\t: ${member.tgl_lahir}",
+                                        fontSize: 14,
+                                        color: white,
+                                        fontWeight: FontWeight.w500),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        CoolButton(
+                                            textColor: themeColor,
+                                            text: "Edit / Delete",
+                                            color: white,
+                                            onTap: () {
+                                              _showEditDeleteDialog(member);
+                                            }),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                             const SizedBox(
                               height: 16,
-                            ),
-                            MyText(
-                                child: "Transaction",
-                                fontSize: 18,
-                                color: themeColor,
-                                fontWeight: FontWeight.bold),
-                            const SizedBox(
-                              height: 12,
                             ),
                             TransactionList(id: member.id)
                           ],
@@ -135,60 +172,33 @@ class _MemberProfileState extends State<MemberProfile> {
     );
   }
 
-  Widget _buildDetailItem(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "$title: ",
-            style: GoogleFonts.montserrat(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: themeColor,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: GoogleFonts.montserrat(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.black87,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _showEditDeleteDialog(Member member) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: Border.all(color: themeColor),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
+                const Center(
                   child: MyText(
                     child: "What do you want?",
                     fontSize: 24,
-                    color: themeColor,
+                    color: Colors.black,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 16),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CoolButton(
                       text: 'Edit',
+                      textColor: white,
                       color: Colors.yellow,
                       onTap: () {
                         _prepareForEditing(member);
@@ -198,6 +208,7 @@ class _MemberProfileState extends State<MemberProfile> {
                     const SizedBox(width: 10),
                     CoolButton(
                       text: "Delete",
+                      textColor: white,
                       color: Colors.red,
                       onTap: () {
                         memberBloc.add(DeleteMember(id: member.id));

@@ -6,10 +6,10 @@ import 'package:get_storage/get_storage.dart';
 final _dio = Dio(BaseOptions(baseUrl: 'https://mobileapis.manpits.xyz/api'));
 final _localStorage = GetStorage();
 
-class RemoteDataSource {
-  final _auth = Options(
-      headers: {"Authorization": "Bearer ${_localStorage.read("token")}"});
+final _auth = Options(
+    headers: {"Authorization": "Bearer ${_localStorage.read("token")}"});
 
+class RemoteDataSource {
   Future<DataMember> getMembers() async {
     final response = await _dio.get('/anggota',
         options: Options(headers: {
@@ -79,11 +79,13 @@ class RemoteDataSource {
     }
   }
 
-  Future goLogin(User user) async {
+  Future goLogin(String email, String password) async {
     try {
-      final response = await _dio.post('/login',
-          data: {"email": user.email, "password": user.password},
-          options: _auth);
+      final response = await _dio
+          .post('/login', data: {"email": email, "password": password});
+
+      print(response.data);
+      _localStorage.write('token', response.data['data']['token']);
 
       return response;
     } on DioException catch (e) {
@@ -91,15 +93,11 @@ class RemoteDataSource {
     }
   }
 
-  Future goRegister(User user) async {
+  Future goRegister(User user, String password) async {
     try {
-      final response = await _dio.post('/login',
-          data: {
-            "email": user.email,
-            "name": user.name,
-            "password": user.password
-          },
-          options: _auth);
+      final response = await _dio.post('/register',
+          data: {"email": user.email, "name": user.name, "password": password});
+      print(response.data);
 
       return response;
     } on DioException catch (e) {
@@ -107,16 +105,19 @@ class RemoteDataSource {
     }
   }
 
-  Future goUser() async {
+  Future<User> goUser() async {
     try {
       final response = await _dio.get('/user',
           options: Options(headers: {
             'Authorization': 'Bearer ${_localStorage.read('token')}'
           }));
 
-      return response;
+      print(response);
+
+      return User.fromModel(response.data);
     } on DioException catch (e) {
       print(e.message);
+      throw Exception(e.error);
     }
   }
 

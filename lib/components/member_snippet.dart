@@ -1,3 +1,4 @@
+import 'package:explora_app/components/null_data.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/components/text.dart';
 import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
@@ -20,6 +21,10 @@ class MemberSnippet extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (state is MemberLoaded) {
               final members = state.members;
+
+              if (members.isEmpty) {
+                return const NullData();
+              }
               return ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,

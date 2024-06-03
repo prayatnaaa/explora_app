@@ -1,9 +1,16 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:explora_app/components/text.dart';
 import 'package:explora_app/contents/colors.dart';
+import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
+import 'package:explora_app/data/bloc/user_bloc/user_bloc.dart';
+import 'package:explora_app/data/datasources/member_datasource.dart';
+import 'package:explora_app/models/user.dart';
 import 'package:explora_app/services/api_user.dart';
 import 'package:explora_app/components/password_textfield.dart';
 import 'package:explora_app/components/textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -25,171 +32,201 @@ class _RegisterPageState extends State<RegisterPage> with UserController {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Stack(
+    return BlocProvider(
+      create: (context) => UserBloc(remoteDataSource: RemoteDataSource()),
+      child: Scaffold(
+        body: BlocListener<UserBloc, UserState>(
+          listener: (context, userState) {
+            if (userState is UserRegistered) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Colors.green,
+                  content: MyText(
+                      child: "Register user success!",
+                      fontSize: 14,
+                      color: white,
+                      fontWeight: FontWeight.w500)));
+              Navigator.pushReplacementNamed(context, "/login");
+            }
+          },
+          child:
+              BlocBuilder<UserBloc, UserState>(builder: (context, userState) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
                   children: [
-                    const Align(
-                        alignment: Alignment.centerRight,
-                        child: Image(image: AssetImage("assets/map.png"))),
-                    Positioned(
-                      top: 130,
-                      left: 120,
-                      child: Text(
-                        "Get Started",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 24, fontWeight: FontWeight.w500),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Stack(
+                        children: [
+                          const Align(
+                              alignment: Alignment.centerRight,
+                              child:
+                                  Image(image: AssetImage("assets/map.png"))),
+                          Positioned(
+                            top: 130,
+                            left: 120,
+                            child: Text(
+                              "Get Started",
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 24, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Positioned(
+                            top: 170,
+                            left: 100,
+                            child: Text(
+                              "by creating a free account",
+                              style: GoogleFonts.montserrat(fontSize: 14),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    Positioned(
-                      top: 170,
-                      left: 100,
-                      child: Text(
-                        "by creating a free account",
-                        style: GoogleFonts.montserrat(fontSize: 14),
+                    MyTextField(
+                        onTap: () {
+                          setState(() {
+                            errorStatus = false;
+                          });
+                        },
+                        hintText: "Enter your name",
+                        controller: nameController),
+                    MyTextField(
+                        onTap: () {
+                          setState(() {
+                            errorStatus = false;
+                          });
+                        },
+                        hintText: "Enter your email",
+                        controller: emailController),
+                    PasswordTextField(
+                        hintText: "Create Password",
+                        onTap: () {
+                          setState(() {
+                            errorStatus = false;
+                          });
+                        },
+                        controller: passwordController),
+                    PasswordTextField(
+                        hintText: "Verify Password",
+                        onTap: () {
+                          setState(() {
+                            errorStatus = false;
+                          });
+                        },
+                        controller: verifyPasswordController),
+                    Container(
+                      margin: const EdgeInsets.only(left: 40),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Visibility(
+                          visible: errorStatus,
+                          child: Text(
+                            errorMessage,
+                            style: GoogleFonts.montserrat(
+                                fontSize: 12,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 40),
+                      width: 300,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            backgroundColor: themeColor),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Next",
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFFFCFCFC)),
+                            ),
+                            const Icon(
+                              Icons.navigate_next,
+                              color: Color(0xFFFCFCFC),
+                            )
+                          ],
+                        ),
+                        onPressed: () {
+                          // if (emailController.text.isEmpty ||
+                          //     passwordController.text.isEmpty ||
+                          //     verifyPasswordController.text.isEmpty) {
+                          //   setState(() {
+                          //     errorStatus = true;
+                          //   });
+                          //   errorMessage = "Invalid. Please fill all the fields!";
+                          // }
+                          // if (!EmailValidator.validate(emailController.text)) {
+                          //   setState(() {
+                          //     errorStatus = true;
+                          //   });
+                          //   errorMessage =
+                          //       "Please make sure the email you set is valid!";
+                          // } else if (passwordController.text.isEmpty &&
+                          //     verifyPasswordController.text.isEmpty) {
+                          //   setState(() {
+                          //     errorStatus = true;
+                          //     errorMessage =
+                          //         "Please make sure that you fill the password!";
+                          //   });
+                          // } else if (passwordController.text !=
+                          //     verifyPasswordController.text) {
+                          //   setState(() {
+                          //     errorStatus = true;
+                          //   });
+                          //   errorMessage = "Please match your passwords!";
+                          // } else {
+                          //   goRegister(context, nameController.text,
+                          //       emailController.text, passwordController.text);
+                          // }
+                          //TODO: register onclick
+                          User user = User(
+                            name: nameController.text,
+                            email: emailController.text,
+                          );
+                          context.read<UserBloc>().add(UserRegister(
+                              user: user, password: passwordController.text));
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already a member? ",
+                            style: GoogleFonts.montserrat(fontSize: 13),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacementNamed(context, '/login');
+                            },
+                            child: Text(
+                              "Log in",
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   ],
                 ),
               ),
-              MyTextField(
-                  onTap: () {
-                    setState(() {
-                      errorStatus = false;
-                    });
-                  },
-                  hintText: "Enter your name",
-                  controller: nameController),
-              MyTextField(
-                  onTap: () {
-                    setState(() {
-                      errorStatus = false;
-                    });
-                  },
-                  hintText: "Enter your email",
-                  controller: emailController),
-              PasswordTextField(
-                  onTap: () {
-                    setState(() {
-                      errorStatus = false;
-                    });
-                  },
-                  controller: passwordController),
-              PasswordTextField(
-                  onTap: () {
-                    setState(() {
-                      errorStatus = false;
-                    });
-                  },
-                  controller: verifyPasswordController),
-              Container(
-                margin: const EdgeInsets.only(left: 40),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Visibility(
-                    visible: errorStatus,
-                    child: Text(
-                      errorMessage,
-                      style: GoogleFonts.montserrat(
-                          fontSize: 12,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 40),
-                width: 300,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      backgroundColor: themeColor),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Next",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFFFCFCFC)),
-                      ),
-                      const Icon(
-                        Icons.navigate_next,
-                        color: Color(0xFFFCFCFC),
-                      )
-                    ],
-                  ),
-                  onPressed: () {
-                    if (emailController.text.isEmpty ||
-                        passwordController.text.isEmpty ||
-                        verifyPasswordController.text.isEmpty) {
-                      setState(() {
-                        errorStatus = true;
-                      });
-                      errorMessage = "Invalid. Please fill all the fields!";
-                    }
-                    if (!EmailValidator.validate(emailController.text)) {
-                      setState(() {
-                        errorStatus = true;
-                      });
-                      errorMessage =
-                          "Please make sure the email you set is valid!";
-                    } else if (passwordController.text.isEmpty &&
-                        verifyPasswordController.text.isEmpty) {
-                      setState(() {
-                        errorStatus = true;
-                        errorMessage =
-                            "Please make sure that you fill the password!";
-                      });
-                    } else if (passwordController.text !=
-                        verifyPasswordController.text) {
-                      setState(() {
-                        errorStatus = true;
-                      });
-                      errorMessage = "Please match your passwords!";
-                    } else {
-                      goRegister(context, nameController.text,
-                          emailController.text, passwordController.text);
-                    }
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already a member? ",
-                      style: GoogleFonts.montserrat(fontSize: 13),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(context, '/login');
-                      },
-                      child: Text(
-                        "Log in",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+            );
+          }),
         ),
       ),
     );

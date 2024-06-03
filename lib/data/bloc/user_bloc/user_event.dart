@@ -8,13 +8,15 @@ class UserLoad extends UserEvent {}
 class UserLogout extends UserEvent {}
 
 class UserLogin extends UserEvent {
-  final User user;
+  final String email;
+  final String password;
 
-  UserLogin(this.user);
+  UserLogin(this.email, this.password);
 }
 
 class UserRegister extends UserEvent {
   final User user;
+  final String password;
 
-  UserRegister({required this.user});
+  UserRegister({required this.user, required this.password});
 }

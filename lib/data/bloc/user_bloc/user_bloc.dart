@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
@@ -30,7 +31,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   FutureOr<void> _userLogin(UserLogin event, Emitter<UserState> emit) async {
     try {
-      await remoteDataSource.goLogin(event.user);
+      await remoteDataSource.goLogin(event.email, event.password);
       emit(UserLogged());
     } on DioException catch (e) {
       print(e.message);
@@ -42,14 +43,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await remoteDataSource.goLogout();
       emit(UserExit());
     } on DioException catch (e) {
-      print(e.message);
+      emit(UserError(message: e.toString()));
     }
   }
 
   FutureOr<void> _userRegister(
       UserRegister event, Emitter<UserState> emit) async {
     try {
-      await remoteDataSource.goRegister(event.user);
+      await remoteDataSource.goRegister(event.user, event.password);
       emit(UserRegistered());
     } on DioException catch (e) {
       print(e.message);

@@ -59,18 +59,18 @@ class _MemberPageState extends State<MemberPage> {
                     fontWeight: FontWeight.w600),
               ),
               floatingActionButton: FloatingActionButton(
-                  backgroundColor: white,
+                  backgroundColor: themeColor,
                   hoverColor: themeColor,
                   child: Icon(
                     Icons.add,
-                    color: themeColor,
+                    color: white,
                   ),
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return MemberButton(
-                          title: "Add",
+                          title: "Add Member",
                           addressController: addressController,
                           nameController: nameController,
                           phoneNumController: phoneNumController,
@@ -122,13 +122,7 @@ class _MemberPageState extends State<MemberPage> {
                                       ),
                                     ),
                                     //member nomor_induk
-                                    MyText(
-                                      child:
-                                          members[index].nomor_induk.toString(),
-                                      fontSize: 16,
-                                      color: themeColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+
                                     //member telepon
                                     MyText(
                                       child: members[index].telepon,
@@ -146,116 +140,125 @@ class _MemberPageState extends State<MemberPage> {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return Dialog(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                  ),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.all(
-                                                            12.0),
+                                                            16.0),
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.min,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
                                                       children: [
-                                                        Center(
-                                                          child: MyText(
-                                                              child:
-                                                                  "What do you want?",
-                                                              fontSize: 24,
-                                                              color: themeColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
+                                                        MyText(
+                                                          child:
+                                                              "Member Actions",
+                                                          fontSize: 18,
+                                                          color: themeColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                         ),
                                                         const SizedBox(
-                                                          height: 16,
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: [
-                                                            CoolButton(
-                                                                text: 'Edit',
-                                                                color: Colors
-                                                                    .yellow,
-                                                                onTap: () {
-                                                                  setState(() {
-                                                                    addressController
-                                                                        .text = members[
-                                                                            index]
-                                                                        .alamat;
-                                                                    nameController
-                                                                        .text = members[
-                                                                            index]
-                                                                        .nama;
-                                                                    phoneNumController
-                                                                        .text = members[
-                                                                            index]
-                                                                        .telepon;
-                                                                    idNumController
-                                                                        .text = members[
-                                                                            index]
-                                                                        .nomor_induk
-                                                                        .toString();
-                                                                    birthDateController
-                                                                        .text = members[
-                                                                            index]
-                                                                        .tgl_lahir;
-                                                                  });
-                                                                  showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (BuildContext
-                                                                            context) {
-                                                                      return MemberButton(
-                                                                        title:
-                                                                            "Edit",
-                                                                        addressController:
-                                                                            addressController,
-                                                                        nameController:
-                                                                            nameController,
-                                                                        phoneNumController:
-                                                                            phoneNumController,
-                                                                        idNumController:
-                                                                            idNumController,
-                                                                        birthDateController:
-                                                                            birthDateController,
-                                                                        onPressed:
-                                                                            () {
-                                                                          Member member = Member(
-                                                                              status_aktif: 1,
-                                                                              id: members[index].id,
-                                                                              nomor_induk: int.tryParse(idNumController.text) ?? 0,
-                                                                              nama: nameController.text,
-                                                                              alamat: addressController.text,
-                                                                              tgl_lahir: birthDateController.text,
-                                                                              telepon: phoneNumController.text);
+                                                            height: 24),
+                                                        CoolButton(
+                                                          text: 'Edit',
+                                                          color: Colors
+                                                              .yellow[700],
+                                                          onTap: () {
+                                                            setState(() {
+                                                              addressController
+                                                                      .text =
+                                                                  members[index]
+                                                                      .alamat;
+                                                              nameController
+                                                                      .text =
+                                                                  members[index]
+                                                                      .nama;
+                                                              phoneNumController
+                                                                      .text =
+                                                                  members[index]
+                                                                      .telepon;
+                                                              idNumController
+                                                                  .text = members[
+                                                                      index]
+                                                                  .nomor_induk
+                                                                  .toString();
+                                                              birthDateController
+                                                                      .text =
+                                                                  members[index]
+                                                                      .tgl_lahir;
+                                                            });
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                            showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return MemberButton(
+                                                                  title: "Edit",
+                                                                  addressController:
+                                                                      addressController,
+                                                                  nameController:
+                                                                      nameController,
+                                                                  phoneNumController:
+                                                                      phoneNumController,
+                                                                  idNumController:
+                                                                      idNumController,
+                                                                  birthDateController:
+                                                                      birthDateController,
+                                                                  onPressed:
+                                                                      () {
+                                                                    Member member = Member(
+                                                                        status_aktif:
+                                                                            1,
+                                                                        id: members[index]
+                                                                            .id,
+                                                                        nomor_induk:
+                                                                            int.tryParse(idNumController.text) ??
+                                                                                0,
+                                                                        nama: nameController
+                                                                            .text,
+                                                                        alamat: addressController
+                                                                            .text,
+                                                                        tgl_lahir:
+                                                                            birthDateController
+                                                                                .text,
+                                                                        telepon:
+                                                                            phoneNumController.text);
 
-                                                                          memberBloc
-                                                                              .add(EditMember(member: member));
-                                                                          Navigator.of(context)
-                                                                              .pop(); // Close the dialog
-                                                                        },
-                                                                      );
-                                                                    },
-                                                                  );
-                                                                }),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            CoolButton(
-                                                                text: "Delete",
-                                                                color:
-                                                                    Colors.red,
-                                                                onTap: () {
-                                                                  memberBloc.add(
-                                                                      DeleteMember(
-                                                                          id: members[index]
-                                                                              .id));
-                                                                }),
-                                                          ],
+                                                                    memberBloc.add(
+                                                                        EditMember(
+                                                                            member:
+                                                                                member));
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop(); // Close the dialog
+                                                                  },
+                                                                );
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 16),
+                                                        CoolButton(
+                                                          text: "Delete",
+                                                          color: Colors.red,
+                                                          onTap: () {
+                                                            memberBloc.add(
+                                                                DeleteMember(
+                                                                    id: members[
+                                                                            index]
+                                                                        .id));
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(); // Close the dialog
+                                                          },
                                                         ),
                                                       ],
                                                     ),
@@ -263,7 +266,10 @@ class _MemberPageState extends State<MemberPage> {
                                                 );
                                               });
                                         },
-                                        icon: const Icon(Icons.settings)),
+                                        icon: Icon(
+                                          Icons.settings,
+                                          color: themeColor,
+                                        )),
                                     IconButton(
                                         onPressed: () {
                                           Navigator.push(
@@ -273,7 +279,10 @@ class _MemberPageState extends State<MemberPage> {
                                                       MemberProfile(
                                                           index: index)));
                                         },
-                                        icon: const Icon(Icons.details))
+                                        icon: Icon(
+                                          Icons.info_outline,
+                                          color: themeColor,
+                                        ))
                                   ],
                                 ),
 

@@ -1,10 +1,17 @@
 class User {
+  final int? id;
   final String name;
   final String email;
-  final String? password;
 
-  User({required this.name, required this.email, this.password});
+  User({
+    this.id,
+    required this.name,
+    required this.email,
+  });
 
   factory User.fromModel(Map<String, dynamic> json) => User(
-      name: json['name'], email: json['email'], password: json['password']);
+        id: json["data"]["user"]["id"],
+        name: json["data"]["user"]["name"],
+        email: json["data"]["user"]["email"],
+      );
 }

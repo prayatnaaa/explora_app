@@ -26,30 +26,59 @@ class _TransactionInputState extends State<TransactionInput> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MyText(
-                child: "Transaction",
-                fontSize: 16,
+            Center(
+              child: MyText(
+                child: "Add Transaction",
+                fontSize: 20,
                 color: themeColor,
-                fontWeight: FontWeight.bold),
-            const SizedBox(
-              height: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            MyText(
+              child: "Transaction ID",
+              fontSize: 14,
+              color: Colors.grey[700],
+              fontWeight: FontWeight.normal,
             ),
             MyTextField(
-                onTap: () {},
-                hintText: "Transaction ID",
-                controller: widget.transactionIdController),
-            MyTextField(
-                onTap: () {},
-                hintText: "Amount",
-                controller: widget.amountController),
-            const SizedBox(
-              height: 36,
+              onTap: () {},
+              hintText: "Enter Transaction ID",
+              controller: widget.transactionIdController,
             ),
-            CoolButton(text: "Add", color: Colors.green, onTap: widget.onTap)
+            const SizedBox(height: 16),
+            MyText(
+              child: "Amount",
+              fontSize: 14,
+              color: Colors.grey[700],
+              fontWeight: FontWeight.normal,
+            ),
+            MyTextField(
+              onTap: () {},
+              hintText: "Enter Amount",
+              controller: widget.amountController,
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CoolButton(
+                  text: "Add",
+                  color: Colors.green,
+                  onTap: widget.onTap,
+                  textColor: white,
+                ),
+              ],
+            ),
           ],
         ),
       ),

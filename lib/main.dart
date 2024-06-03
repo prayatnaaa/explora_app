@@ -4,7 +4,6 @@ import 'package:explora_app/pages/onboard_page.dart';
 import 'package:explora_app/pages/user/profile_page.dart';
 import 'package:explora_app/pages/auth_screen/register_page.dart';
 import 'package:explora_app/pages/user/user_page.dart';
-import 'package:explora_app/pages/user/user_profile_page.dart';
 import 'package:explora_app/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/login': (context) => const LoginPage(),
         '/user': (context) => const UserPage(),
-        '/profile': (context) => ProfilePage(),
+        '/profile': (context) => const UserProfilePage(),
         '/member': (context) => const MemberPage()
       },
     );
