@@ -35,7 +35,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     try {
       await transactionDatasource.addTransaction(
           event.memberId, event.transactionId, event.amount);
+      print("tes");
       emit(TransactionAdded());
+      print("halo");
     } on DioException catch (e) {
       throw Exception(e.error);
     }

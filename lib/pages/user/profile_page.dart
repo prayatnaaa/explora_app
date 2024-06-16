@@ -17,19 +17,21 @@ class UserProfilePage extends StatelessWidget {
         if (userState is UserLoaded) {
           final user = userState.user;
 
-          return Column(
-            children: [
-              MyText(
-                  child: user.name,
-                  fontSize: 16,
-                  color: black,
-                  fontWeight: FontWeight.bold),
-              MyText(
-                  child: user.email,
-                  fontSize: 16,
-                  color: black,
-                  fontWeight: FontWeight.bold),
-            ],
+          return Scaffold(
+            body: Column(
+              children: [
+                MyText(
+                    child: user.name,
+                    fontSize: 16,
+                    color: black,
+                    fontWeight: FontWeight.bold),
+                MyText(
+                    child: user.email,
+                    fontSize: 16,
+                    color: black,
+                    fontWeight: FontWeight.bold),
+              ],
+            ),
           );
         } else if (userState is UserError) {
           return const Center(

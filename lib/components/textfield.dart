@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class MyTextField extends StatelessWidget {
   VoidCallback onTap;
   final String hintText;
-  final controller;
+  final TextEditingController? controller;
 
   MyTextField(
       {super.key,

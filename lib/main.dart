@@ -1,4 +1,5 @@
 import 'package:explora_app/pages/auth_screen/login_page.dart';
+import 'package:explora_app/pages/main_page.dart';
 import 'package:explora_app/pages/members/member_page.dart';
 import 'package:explora_app/pages/onboard_page.dart';
 import 'package:explora_app/pages/user/profile_page.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/user': (context) => const UserPage(),
         '/profile': (context) => const UserProfilePage(),
-        '/member': (context) => const MemberPage()
+        '/member': (context) => const MemberPage(),
+        '/main': (context) => const MainPage()
       },
     );
   }

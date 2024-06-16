@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:explora_app/models/member.dart';
+import 'package:explora_app/models/interest.dart';
 import 'package:explora_app/models/transaction.dart';
-import 'package:explora_app/models/user.dart';
 import 'package:get_storage/get_storage.dart';
 
 final _dio = Dio(BaseOptions(baseUrl: 'https://mobileapis.manpits.xyz/api'));
@@ -40,6 +39,40 @@ class TransactionDatasource {
       return response;
     } on DioException catch (e) {
       throw Exception(e.error);
+    }
+  }
+
+  Future<DataBunga> getBunga() async {
+    try {
+      final response = await _dio.get('/settingbunga', options: _auth);
+      return DataBunga.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception(e.error);
+    }
+  }
+
+  Future<ActiveBunga> getActiveBunga() async {
+    try {
+      final response = await _dio.get('/settingbunga', options: _auth);
+      return ActiveBunga.fromModel(response.data);
+    } on DioException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  Future addInterest(Bunga bunga) async {
+    try {
+      final response = await _dio.post('/addsettingbunga',
+          data: {
+            'id': bunga.id,
+            'persen': bunga.persen,
+            'isaktif': bunga.isaktif
+          },
+          options: _auth);
+
+      return response;
+    } on DioException catch (e) {
+      throw Exception(e.message);
     }
   }
 }

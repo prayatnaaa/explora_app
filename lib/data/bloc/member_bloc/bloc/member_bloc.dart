@@ -32,7 +32,7 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
       final result = await remoteDataSource.addMember(event.member);
       emit(MemberAdded());
     } on DioException catch (err) {
-      emit(MemberError(err.toString()));
+      emit(MemberError(err.message.toString()));
     }
   }
 

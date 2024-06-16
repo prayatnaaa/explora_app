@@ -1,4 +1,3 @@
-import 'package:explora_app/components/text.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:flutter/material.dart';
 

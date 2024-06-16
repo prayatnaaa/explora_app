@@ -25,30 +25,37 @@ class MemberSnippet extends StatelessWidget {
               if (members.isEmpty) {
                 return const NullData();
               }
-              return ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: members.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: themeColor),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 16),
-                        child: MyText(
-                          child: members[index].nama,
-                          fontSize: 16,
-                          color: white,
-                          fontWeight: FontWeight.w600,
+              return Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: themeColor),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: members.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            border:
+                                Border(bottom: BorderSide(color: themeColor))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                          ),
+                          child: MyText(
+                            child: members[index].nama,
+                            fontSize: 16,
+                            color: black,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ),
               );
             } else if (state is MemberError) {
               return const Center(child: Text('Failed to load members'));

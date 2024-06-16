@@ -51,12 +51,12 @@ class _MemberPageState extends State<MemberPage> {
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: themeColor,
-                foregroundColor: white,
+                automaticallyImplyLeading: false,
                 title: MyText(
                     child: "Members",
-                    fontSize: 24,
+                    fontSize: 18,
                     color: white,
-                    fontWeight: FontWeight.w600),
+                    fontWeight: FontWeight.w700),
               ),
               floatingActionButton: FloatingActionButton(
                   backgroundColor: themeColor,
@@ -96,12 +96,9 @@ class _MemberPageState extends State<MemberPage> {
                 itemCount: members.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
                         color: white,
-                        border: Border.all(color: themeColor)),
+                        border: Border(bottom: BorderSide(color: themeColor))),
                     width: 280,
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),

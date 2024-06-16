@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> with UserController {
                     fontSize: 16,
                     color: white,
                     fontWeight: FontWeight.bold)));
-            Navigator.pushReplacementNamed(context, "/user");
+            Navigator.pushReplacementNamed(context, "/main");
           }
         },
         child: BlocBuilder<UserBloc, UserState>(
