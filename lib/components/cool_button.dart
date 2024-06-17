@@ -1,9 +1,10 @@
+import 'package:explora_app/contents/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CoolButton extends StatefulWidget {
   final String text;
-  final Color? color;
+  final Color color;
   final VoidCallback? onTap;
   Color? textColor = Colors.white;
 
@@ -24,14 +25,20 @@ class _CoolButtonState extends State<CoolButton> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
+        width: 150,
+        height: 50,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), color: widget.color),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(28, 10, 28, 10),
-          child: Text(
-            widget.text,
-            style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w600, color: widget.textColor),
+            color: white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: widget.color)),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(28, 10, 28, 10),
+            child: Text(
+              widget.text,
+              style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w600, color: widget.textColor),
+            ),
           ),
         ),
       ),

@@ -261,9 +261,7 @@ class _MemberProfileState extends State<MemberProfile> {
                                   }
                                   if (state is TransactionLoaded) {
                                     final saving = state.savings.saldo;
-                                    TextEditingController
-                                        transactionController =
-                                        TextEditingController();
+                                    final transactions = state.transactions;
                                     TextEditingController amountController =
                                         TextEditingController();
                                     return Column(children: [
@@ -271,67 +269,12 @@ class _MemberProfileState extends State<MemberProfile> {
                                         padding: const EdgeInsets.all(6.0),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
-                                              width: 180,
-                                              decoration: BoxDecoration(
-                                                  color: themeColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(8)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    MyText(
-                                                        child: "Savings",
-                                                        fontSize: 12,
-                                                        color: white,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                    MyText(
-                                                        child:
-                                                            currencyFormatter(
-                                                                saving),
-                                                        fontSize: 20,
-                                                        color: white,
-                                                        fontWeight:
-                                                            FontWeight.bold)
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 30,
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: themeColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(6)),
-                                              height: 64,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  CoolButton(
-                                                    text: "Add Transaction",
-                                                    color: themeColor,
-                                                    textColor: white,
-                                                    onTap: () {
-                                                      // Navigator.pushReplacement(
-                                                      //     context,
-                                                      //     MaterialPageRoute(
-                                                      //         builder: (context) =>
-                                                      //             AddTransactionPage(
-                                                      //                 memberId:
-                                                      //                     member
-                                                      //                         .id,
-                                                      //                 index: widget
-                                                      //                     .index)));
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
                                                       showDialog(
                                                           context: context,
                                                           builder: (ctx) =>
@@ -341,24 +284,67 @@ class _MemberProfileState extends State<MemberProfile> {
                                                                     TransactionBloc>(),
                                                                 child:
                                                                     AddTransactionDialog(
-                                                                        transactionController:
-                                                                            transactionController,
                                                                         amountController:
                                                                             amountController,
                                                                         onTap:
                                                                             () {
                                                                           context.read<TransactionBloc>().add(AddTransaction(
                                                                               memberId: member.id,
-                                                                              transactionId: int.tryParse(transactionController.text) ?? 0,
+                                                                              transactionId: transactions.isEmpty ? 1 : 2,
                                                                               amount: int.tryParse(amountController.text) ?? 0));
                                                                           Navigator.pop(
                                                                               context);
                                                                         }),
                                                               ));
                                                     },
-                                                  ),
-                                                ],
-                                              ),
+                                                    icon: Icon(
+                                                      Icons
+                                                          .account_balance_outlined,
+                                                      color: themeColor,
+                                                    )),
+                                                MyText(
+                                                    child: "Deposit",
+                                                    fontSize: 12,
+                                                    color: black,
+                                                    fontWeight: FontWeight.w600)
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (ctx) =>
+                                                              BlocProvider<
+                                                                  TransactionBloc>.value(
+                                                                value: context.read<
+                                                                    TransactionBloc>(),
+                                                                child:
+                                                                    AddTransactionDialog(
+                                                                        amountController:
+                                                                            amountController,
+                                                                        onTap:
+                                                                            () {
+                                                                          context.read<TransactionBloc>().add(AddTransaction(
+                                                                              memberId: member.id,
+                                                                              transactionId: 3,
+                                                                              amount: int.tryParse(amountController.text) ?? 0));
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        }),
+                                                              ));
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.payments,
+                                                      color: themeColor,
+                                                    )),
+                                                MyText(
+                                                    child: "Withdraw",
+                                                    fontSize: 12,
+                                                    color: black,
+                                                    fontWeight: FontWeight.w600)
+                                              ],
                                             ),
                                           ],
                                         ),

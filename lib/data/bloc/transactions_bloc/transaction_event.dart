@@ -5,7 +5,7 @@ sealed class TransactionEvent {}
 
 class AddTransaction extends TransactionEvent {
   final int memberId;
-  final int transactionId;
+  final int? transactionId;
   final int amount;
 
   AddTransaction(

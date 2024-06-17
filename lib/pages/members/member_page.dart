@@ -162,8 +162,7 @@ class _MemberPageState extends State<MemberPage> {
                                                             height: 24),
                                                         CoolButton(
                                                           text: 'Edit',
-                                                          color: Colors
-                                                              .yellow[700],
+                                                          color: Colors.yellow,
                                                           onTap: () {
                                                             setState(() {
                                                               addressController
