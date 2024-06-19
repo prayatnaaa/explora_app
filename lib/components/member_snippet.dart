@@ -25,36 +25,34 @@ class MemberSnippet extends StatelessWidget {
               if (members.isEmpty) {
                 return const NullData();
               }
-              return Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: themeColor),
-                    borderRadius: BorderRadius.circular(8)),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: members.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            border:
-                                Border(bottom: BorderSide(color: themeColor))),
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: members.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: themeColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                        ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12,
-                          ),
+                          padding: const EdgeInsets.all(8.0),
                           child: MyText(
                             child: members[index].nama,
                             fontSize: 16,
-                            color: black,
+                            color: white,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               );
             } else if (state is MemberError) {

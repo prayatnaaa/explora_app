@@ -39,10 +39,10 @@ class _MemberProfileState extends State<MemberProfile> {
   @override
   Widget build(BuildContext context) {
     String currencyFormatter(int number) {
-      final formatter = NumberFormat.currency(locale: 'en_US', symbol: 'Rp');
-      String formattedNnumber = formatter.format(number);
+      final formatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ');
+      String formattedNumber = formatter.format(number);
 
-      return formattedNnumber;
+      return formattedNumber;
     }
 
     return Scaffold(
@@ -90,154 +90,43 @@ class _MemberProfileState extends State<MemberProfile> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AnimatedContainer(
-                            duration: const Duration(seconds: 3),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            member.nama,
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 28,
-                                              fontWeight: FontWeight.bold,
-                                              color: themeColor,
-                                            ),
-                                          ),
-                                          MyText(
-                                              child: member.telepon,
-                                              fontSize: 16,
-                                              color: themeColor,
-                                              fontWeight: FontWeight.w500),
-                                        ],
-                                      ),
-                                      IconButton(
-                                          color: themeColor,
-                                          onPressed: () {
-                                            setState(() {
-                                              selected = !selected;
-                                            });
-                                          },
-                                          icon: Icon(selected
-                                              ? Icons.visibility
-                                              : Icons.visibility_off))
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12),
-                                  child: Visibility(
-                                    visible: selected,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: themeColor)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                                child: "ID",
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.bold),
-                                            MyText(
-                                                child: "${member.id}",
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                                child: "Card ID",
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.bold),
-                                            MyText(
-                                                child: "${member.nomor_induk}",
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                                child: "Address",
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.bold),
-                                            MyText(
-                                                child: member.alamat,
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                                child: "Birth Date",
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.bold),
-                                            MyText(
-                                                child: member.tgl_lahir,
-                                                fontSize: 14,
-                                                color: black,
-                                                fontWeight: FontWeight.w500),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            CoolButton(
-                                                textColor: white,
-                                                text: "Edit / Delete",
-                                                color: themeColor,
-                                                onTap: () {
-                                                  _showEditDeleteDialog(member);
-                                                }),
-                                          ],
-                                        ),
+                                        MyText(
+                                            child: member.nama,
+                                            fontSize: 16,
+                                            color: black,
+                                            fontWeight: FontWeight.bold),
+                                        MyText(
+                                            child: member.telepon,
+                                            fontSize: 12,
+                                            color: black,
+                                            fontWeight: FontWeight.w400),
                                       ],
                                     ),
-                                  ),
+                                    IconButton(
+                                        onPressed: () {
+                                          _showEditDeleteDialog(member);
+                                        },
+                                        icon: const Icon(Icons.info_outline))
+                                  ],
                                 ),
-                                Divider(
-                                  color: themeColor,
-                                )
-                              ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 16,
                           ),
                           BlocProvider(
                             create: (context) => transactionBloc
@@ -266,87 +155,152 @@ class _MemberProfileState extends State<MemberProfile> {
                                         TextEditingController();
                                     return Column(children: [
                                       Padding(
-                                        padding: const EdgeInsets.all(6.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 4),
+                                          decoration: BoxDecoration(
+                                              color: themeColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(6.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (ctx) =>
-                                                              BlocProvider<
-                                                                  TransactionBloc>.value(
-                                                                value: context.read<
-                                                                    TransactionBloc>(),
-                                                                child:
-                                                                    AddTransactionDialog(
-                                                                        amountController:
-                                                                            amountController,
-                                                                        onTap:
-                                                                            () {
-                                                                          context.read<TransactionBloc>().add(AddTransaction(
-                                                                              memberId: member.id,
-                                                                              transactionId: transactions.isEmpty ? 1 : 2,
-                                                                              amount: int.tryParse(amountController.text) ?? 0));
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        }),
-                                                              ));
-                                                    },
-                                                    icon: Icon(
-                                                      Icons
-                                                          .account_balance_outlined,
-                                                      color: themeColor,
-                                                    )),
-                                                MyText(
-                                                    child: "Deposit",
-                                                    fontSize: 12,
-                                                    color: black,
-                                                    fontWeight: FontWeight.w600)
+                                                Column(
+                                                  children: [
+                                                    MyText(
+                                                        child:
+                                                            currencyFormatter(
+                                                                saving),
+                                                        fontSize: 16,
+                                                        color: white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    MyText(
+                                                        child: "Total Savings",
+                                                        fontSize: 12,
+                                                        color: white,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(4),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  color: white,
+                                                                  shape: BoxShape
+                                                                      .circle),
+                                                          child: IconButton(
+                                                              onPressed: () {
+                                                                showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (ctx) =>
+                                                                        BlocProvider<
+                                                                            TransactionBloc>.value(
+                                                                          value:
+                                                                              context.read<TransactionBloc>(),
+                                                                          child: AddTransactionDialog(
+                                                                              title: "Deposit",
+                                                                              amountController: amountController,
+                                                                              onTap: () {
+                                                                                context.read<TransactionBloc>().add(AddTransaction(memberId: member.id, transactionId: transactions.isEmpty ? 1 : 2, amount: int.tryParse(amountController.text) ?? 0));
+                                                                                Navigator.pop(context);
+                                                                              }),
+                                                                        ));
+                                                              },
+                                                              icon: Icon(
+                                                                size: 20,
+                                                                Icons
+                                                                    .account_balance_outlined,
+                                                                color:
+                                                                    themeColor,
+                                                              )),
+                                                        ),
+                                                        MyText(
+                                                            child: "Deposit",
+                                                            fontSize: 12,
+                                                            color: white,
+                                                            fontWeight:
+                                                                FontWeight.w600)
+                                                      ],
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 12,
+                                                    ),
+                                                    Visibility(
+                                                      visible:
+                                                          transactions.isEmpty
+                                                              ? false
+                                                              : true,
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .all(4),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    color:
+                                                                        white,
+                                                                    shape: BoxShape
+                                                                        .circle),
+                                                            child: IconButton(
+                                                                onPressed: () {
+                                                                  showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder: (ctx) =>
+                                                                          BlocProvider<
+                                                                              TransactionBloc>.value(
+                                                                            value:
+                                                                                context.read<TransactionBloc>(),
+                                                                            child: AddTransactionDialog(
+                                                                                title: "Withdraw",
+                                                                                amountController: amountController,
+                                                                                onTap: () {
+                                                                                  context.read<TransactionBloc>().add(AddTransaction(memberId: member.id, transactionId: 3, amount: int.tryParse(amountController.text) ?? 0));
+                                                                                  Navigator.pop(context);
+                                                                                }),
+                                                                          ));
+                                                                },
+                                                                icon: Icon(
+                                                                  size: 20,
+                                                                  Icons
+                                                                      .payments,
+                                                                  color:
+                                                                      themeColor,
+                                                                )),
+                                                          ),
+                                                          MyText(
+                                                              child: "Withdraw",
+                                                              fontSize: 12,
+                                                              color: white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ],
                                             ),
-                                            Column(
-                                              children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (ctx) =>
-                                                              BlocProvider<
-                                                                  TransactionBloc>.value(
-                                                                value: context.read<
-                                                                    TransactionBloc>(),
-                                                                child:
-                                                                    AddTransactionDialog(
-                                                                        amountController:
-                                                                            amountController,
-                                                                        onTap:
-                                                                            () {
-                                                                          context.read<TransactionBloc>().add(AddTransaction(
-                                                                              memberId: member.id,
-                                                                              transactionId: 3,
-                                                                              amount: int.tryParse(amountController.text) ?? 0));
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        }),
-                                                              ));
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.payments,
-                                                      color: themeColor,
-                                                    )),
-                                                MyText(
-                                                    child: "Withdraw",
-                                                    fontSize: 12,
-                                                    color: black,
-                                                    fontWeight: FontWeight.w600)
-                                              ],
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(
@@ -407,15 +361,67 @@ class _MemberProfileState extends State<MemberProfile> {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Center(
+                Center(
                   child: MyText(
-                    child: "What do you want?",
-                    fontSize: 24,
+                    child: "ID ${member.id}",
+                    fontSize: 18,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const MyText(
+                  child: "Name",
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                MyText(
+                  child: member.nama,
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                const MyText(
+                  child: "Phone number",
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                MyText(
+                  child: member.telepon.toString(),
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                const MyText(
+                  child: "Address",
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                MyText(
+                  child: member.alamat,
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                const MyText(
+                  child: "Birth Date",
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                MyText(
+                  child: member.tgl_lahir,
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
                 ),
                 const SizedBox(height: 16),
                 Row(
@@ -423,7 +429,7 @@ class _MemberProfileState extends State<MemberProfile> {
                   children: [
                     CoolButton(
                       text: 'Edit',
-                      textColor: white,
+                      textColor: black,
                       color: Colors.yellow,
                       onTap: () {
                         _prepareForEditing(member);
@@ -433,7 +439,7 @@ class _MemberProfileState extends State<MemberProfile> {
                     const SizedBox(width: 10),
                     CoolButton(
                       text: "Delete",
-                      textColor: white,
+                      textColor: black,
                       color: Colors.red,
                       onTap: () {
                         memberBloc.add(DeleteMember(id: member.id));

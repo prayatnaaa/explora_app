@@ -38,7 +38,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                 },
                 icon: Icon(
                   isPasswordHidden ? Icons.lock : Icons.lock_open,
-                  color: isPasswordHidden ? Colors.grey : themeColor,
+                  color: isPasswordHidden ? Colors.grey : lightGreen,
                 )),
             hintText: widget.hintText,
             enabledBorder: const OutlineInputBorder(

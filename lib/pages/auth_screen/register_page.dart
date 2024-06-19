@@ -1,7 +1,5 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:explora_app/components/text.dart';
 import 'package:explora_app/contents/colors.dart';
-import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
 import 'package:explora_app/data/bloc/user_bloc/user_bloc.dart';
 import 'package:explora_app/data/datasources/member_datasource.dart';
 import 'package:explora_app/models/user.dart';
@@ -10,7 +8,6 @@ import 'package:explora_app/components/password_textfield.dart';
 import 'package:explora_app/components/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends StatefulWidget {

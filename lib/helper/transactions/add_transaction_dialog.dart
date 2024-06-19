@@ -1,4 +1,5 @@
 import 'package:explora_app/components/cool_button.dart';
+import 'package:explora_app/components/text.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,8 +8,12 @@ class AddTransactionDialog extends StatefulWidget {
   //  final TextEditingController? transactionController;
   final TextEditingController? amountController;
   final VoidCallback onTap;
+  final String title;
   const AddTransactionDialog(
-      {super.key, required this.amountController, required this.onTap});
+      {super.key,
+      required this.amountController,
+      required this.onTap,
+      required this.title});
 
   @override
   State<AddTransactionDialog> createState() => _AddTransactionDialogState();
@@ -26,6 +31,14 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              MyText(
+                  child: widget.title,
+                  fontSize: 16,
+                  color: white,
+                  fontWeight: FontWeight.w600),
+              const SizedBox(
+                height: 20,
+              ),
               TextField(
                 controller: widget.amountController,
                 style: GoogleFonts.montserrat(color: lightGreen),
@@ -47,9 +60,9 @@ class _AddTransactionDialogState extends State<AddTransactionDialog> {
               ),
               CoolButton(
                 onTap: widget.onTap,
-                text: "Add Transaction",
+                text: "Confirm",
                 color: themeColor,
-                textColor: white,
+                textColor: themeColor,
               )
             ],
           ),

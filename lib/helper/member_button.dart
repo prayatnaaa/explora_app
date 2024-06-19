@@ -2,9 +2,7 @@ import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/components/cool_button.dart';
 import 'package:explora_app/components/text.dart';
 import 'package:flutter/material.dart';
-import 'package:explora_app/components/button.dart';
 import 'package:explora_app/components/textfield.dart';
-import 'package:get/state_manager.dart';
 
 class MemberButton extends StatelessWidget {
   final TextEditingController nameController;

@@ -41,105 +41,139 @@ class _InterestPageState extends State<InterestPage> {
               final interest = state.bunga;
               final current = state.currentBunga.aktifBunga.persen;
               return Scaffold(
-                floatingActionButton: FloatingActionButton(onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (ctx) => BlocProvider<InterestBloc>.value(
-                            value: context.read<InterestBloc>(),
-                            child: Dialog(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 8),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    MyTextField(
-                                        onTap: () {},
-                                        hintText: "hintText",
-                                        controller: percentController),
-                                    const SizedBox(
-                                      height: 24,
+                floatingActionButton: FloatingActionButton(
+                    foregroundColor: white,
+                    backgroundColor: themeColor,
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) => BlocProvider<InterestBloc>.value(
+                                value: context.read<InterestBloc>(),
+                                child: Dialog(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16, horizontal: 8),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        MyText(
+                                            child: "Manage Interest",
+                                            fontSize: 16,
+                                            color: black,
+                                            fontWeight: FontWeight.w600),
+                                        MyTextField(
+                                            onTap: () {},
+                                            hintText: "Set Interest Percentage",
+                                            controller: percentController),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                        CoolButton(
+                                          onTap: () {
+                                            Bunga bunga = Bunga(
+                                                persen: double.tryParse(
+                                                        percentController
+                                                            .text) ??
+                                                    0,
+                                                isaktif: 1);
+                                            context
+                                                .read<InterestBloc>()
+                                                .add(AddInterest(bunga: bunga));
+                                          },
+                                          text: "Set",
+                                          color: themeColor,
+                                          textColor: themeColor,
+                                        )
+                                      ],
                                     ),
-                                    CoolButton(
-                                      onTap: () {
-                                        Bunga bunga = Bunga(
-                                            persen: double.tryParse(
-                                                    percentController.text) ??
-                                                0,
-                                            isaktif: 1);
-                                        context
-                                            .read<InterestBloc>()
-                                            .add(AddInterest(bunga: bunga));
-                                      },
-                                      text: "Manage Interest",
-                                      color: themeColor,
-                                      textColor: white,
-                                    )
-                                  ],
+                                  ),
                                 ),
+                              ));
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: white,
+                    )),
+                backgroundColor: white,
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: MyText(
+                            child: 'Interest',
+                            fontSize: 20,
+                            color: black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: 100,
+                        height: 100,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Stack(alignment: Alignment.center, children: [
+                            SizedBox(
+                              width: 90,
+                              height: 90,
+                              child: CircularProgressIndicator(
+                                value: current / 10,
+                                backgroundColor: grey,
+                                valueColor: AlwaysStoppedAnimation(lightGreen),
                               ),
                             ),
-                          ));
-                }),
-                body: Stack(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(color: themeColor),
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 16),
-                          child: MyText(
-                              child: current.toString(),
-                              fontSize: 18,
-                              color: white,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: interest.length,
-                            itemBuilder: (context, index) {
-                              return Text(interest[index].persen.toString());
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    Visibility(
-                      visible: false,
-                      child: Center(
-                        child: Container(
-                          color: grey,
-                          child: Column(
-                            children: [
-                              MyTextField(
-                                  onTap: () {},
-                                  hintText: "Tes",
-                                  controller: percentController),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Bunga bunga = Bunga(
-                                        persen: double.tryParse(
-                                                percentController.text) ??
-                                            0,
-                                        isaktif: 1);
-                                    context
-                                        .read<InterestBloc>()
-                                        .add(AddInterest(bunga: bunga));
-                                    print(state);
-                                  },
-                                  child: const Text("hi"))
-                            ],
-                          ),
+                            MyText(
+                                child: '$current%',
+                                fontSize: 16,
+                                color: themeColor,
+                                fontWeight: FontWeight.bold),
+                          ]),
                         ),
                       ),
-                    )
-                  ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          MyText(
+                              child: "Interest History",
+                              fontSize: 16,
+                              color: black,
+                              fontWeight: FontWeight.bold),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: interest.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(color: grey))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: MyText(
+                                      child: '${interest[index].persen}%',
+                                      fontSize: 16,
+                                      color: themeColor,
+                                      fontWeight: FontWeight.w500),
+                                ));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }

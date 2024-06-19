@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
 import 'package:explora_app/data/datasources/member_datasource.dart';
@@ -49,6 +47,7 @@ class _MemberPageState extends State<MemberPage> {
             final members = memberState.members;
 
             return Scaffold(
+              backgroundColor: white,
               appBar: AppBar(
                 backgroundColor: themeColor,
                 automaticallyImplyLeading: false,
@@ -96,9 +95,12 @@ class _MemberPageState extends State<MemberPage> {
                 itemCount: members.length,
                 itemBuilder: (context, index) {
                   return Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
                     decoration: BoxDecoration(
                         color: white,
-                        border: Border(bottom: BorderSide(color: themeColor))),
+                        border: Border.all(color: themeColor),
+                        borderRadius: BorderRadius.circular(8)),
                     width: 280,
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),

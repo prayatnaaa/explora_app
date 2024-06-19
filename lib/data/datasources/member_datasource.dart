@@ -112,11 +112,8 @@ class RemoteDataSource {
             'Authorization': 'Bearer ${_localStorage.read('token')}'
           }));
 
-      print(response);
-
       return User.fromModel(response.data);
     } on DioException catch (e) {
-      print(e.message);
       throw Exception(e.error);
     }
   }

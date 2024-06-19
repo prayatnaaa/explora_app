@@ -1,7 +1,6 @@
 import 'package:explora_app/pages/auth_screen/login_page.dart';
 import 'package:explora_app/pages/main_page.dart';
 import 'package:explora_app/pages/members/member_page.dart';
-import 'package:explora_app/pages/onboard_page.dart';
 import 'package:explora_app/pages/user/profile_page.dart';
 import 'package:explora_app/pages/auth_screen/register_page.dart';
 import 'package:explora_app/pages/user/user_page.dart';

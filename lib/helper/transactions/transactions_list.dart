@@ -1,12 +1,7 @@
-import 'dart:async';
-
-import 'package:explora_app/components/cool_button.dart';
 import 'package:explora_app/components/text.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/data/bloc/transactions_bloc/transaction_bloc.dart';
 import 'package:explora_app/data/datasources/transaction_datasource.dart';
-import 'package:explora_app/helper/transactions/member_transaction_input.dart';
-import 'package:explora_app/pages/transactions/add_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -23,10 +18,10 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     String currencyFormatter(int number) {
-      final formatter = NumberFormat.currency(locale: 'en_US', symbol: 'Rp');
-      String formattedNnumber = formatter.format(number);
+      final formatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+      String formattedNumber = formatter.format(number);
 
-      return formattedNnumber;
+      return formattedNumber;
     }
 
     return BlocBuilder<TransactionBloc, TransactionState>(
@@ -37,7 +32,7 @@ class _TransactionListState extends State<TransactionList> {
               .add(MemberTransaction(id: widget.id));
         } else if (transactionState is TransactionLoaded) {
           final transactions = transactionState.transactions;
-          final savings = transactionState.savings;
+          // final savings = transactionState.savings;
           return Center(
             child: Container(
               constraints:
