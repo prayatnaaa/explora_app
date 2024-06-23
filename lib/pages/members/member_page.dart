@@ -1,6 +1,8 @@
+import 'package:explora_app/components/logout_modal.dart';
 import 'package:explora_app/contents/colors.dart';
 import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
 import 'package:explora_app/data/datasources/member_datasource.dart';
+import 'package:explora_app/helper/confirm_delete_modal.dart';
 import 'package:explora_app/helper/member_button.dart';
 import 'package:explora_app/models/member.dart';
 import 'package:explora_app/components/cool_button.dart';
@@ -28,280 +30,320 @@ class _MemberPageState extends State<MemberPage> {
     final idNumController = TextEditingController();
     final phoneNumController = TextEditingController();
 
+    SnackBar mySnackBar(String text) {
+      return SnackBar(
+        padding: const EdgeInsets.all(8),
+        showCloseIcon: true,
+        dismissDirection: DismissDirection.up,
+        closeIconColor: white,
+        backgroundColor: themeColor,
+        content: MyText(
+          child: text,
+          fontSize: 16,
+          color: white,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
+
     return BlocProvider(
       create: (context) => memberBloc..add(LoadMember()),
-      child: BlocBuilder<MemberBloc, MemberState>(
-        builder: (context, memberState) {
-          if (memberState is MemberInitial ||
-              memberState is MemberAdded ||
-              memberState is MemberDeleted ||
-              memberState is MemberEdited) {
-            BlocProvider.of<MemberBloc>(context).add(LoadMember());
-          } else if (memberState is MemberLoading) {
-            return Center(
-              child: CircularProgressIndicator(
-                color: themeColor,
-              ),
-            );
-          } else if (memberState is MemberLoaded) {
-            final members = memberState.members;
-
-            return Scaffold(
-              backgroundColor: white,
-              appBar: AppBar(
-                backgroundColor: themeColor,
-                automaticallyImplyLeading: false,
-                title: MyText(
-                    child: "Members",
-                    fontSize: 18,
-                    color: white,
-                    fontWeight: FontWeight.w700),
-              ),
-              floatingActionButton: FloatingActionButton(
-                  backgroundColor: themeColor,
-                  hoverColor: themeColor,
-                  child: Icon(
-                    Icons.add,
-                    color: white,
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return MemberButton(
-                          title: "Add Member",
-                          addressController: addressController,
-                          nameController: nameController,
-                          phoneNumController: phoneNumController,
-                          idNumController: idNumController,
-                          birthDateController: birthDateController,
-                          onPressed: () {
-                            Member member = Member(
-                                nomor_induk:
-                                    int.tryParse(idNumController.text) ?? 0,
-                                nama: nameController.text,
-                                alamat: addressController.text,
-                                tgl_lahir: birthDateController.text,
-                                telepon: phoneNumController.text);
-
-                            memberBloc.add(AddMember(member: member));
-                            Navigator.of(context).pop(); // Close the dialog
-                          },
-                        );
-                      },
-                    );
-                  }),
-              body: ListView.builder(
-                itemCount: members.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-                    decoration: BoxDecoration(
-                        color: white,
-                        border: Border.all(color: themeColor),
-                        borderRadius: BorderRadius.circular(8)),
-                    width: 280,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      members[index].nama,
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: themeColor,
-                                      ),
-                                    ),
-                                    //member nomor_induk
-
-                                    //member telepon
-                                    MyText(
-                                      child: members[index].telepon,
-                                      fontSize: 12,
-                                      color: themeColor,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Dialog(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.0),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            16.0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        MyText(
-                                                          child:
-                                                              "Member Actions",
-                                                          fontSize: 18,
-                                                          color: themeColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 24),
-                                                        CoolButton(
-                                                          text: 'Edit',
-                                                          color: Colors.yellow,
-                                                          onTap: () {
-                                                            setState(() {
-                                                              addressController
-                                                                      .text =
-                                                                  members[index]
-                                                                      .alamat;
-                                                              nameController
-                                                                      .text =
-                                                                  members[index]
-                                                                      .nama;
-                                                              phoneNumController
-                                                                      .text =
-                                                                  members[index]
-                                                                      .telepon;
-                                                              idNumController
-                                                                  .text = members[
-                                                                      index]
-                                                                  .nomor_induk
-                                                                  .toString();
-                                                              birthDateController
-                                                                      .text =
-                                                                  members[index]
-                                                                      .tgl_lahir;
-                                                            });
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                            showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return MemberButton(
-                                                                  title: "Edit",
-                                                                  addressController:
-                                                                      addressController,
-                                                                  nameController:
-                                                                      nameController,
-                                                                  phoneNumController:
-                                                                      phoneNumController,
-                                                                  idNumController:
-                                                                      idNumController,
-                                                                  birthDateController:
-                                                                      birthDateController,
-                                                                  onPressed:
-                                                                      () {
-                                                                    Member member = Member(
-                                                                        status_aktif:
-                                                                            1,
-                                                                        id: members[index]
-                                                                            .id,
-                                                                        nomor_induk:
-                                                                            int.tryParse(idNumController.text) ??
-                                                                                0,
-                                                                        nama: nameController
-                                                                            .text,
-                                                                        alamat: addressController
-                                                                            .text,
-                                                                        tgl_lahir:
-                                                                            birthDateController
-                                                                                .text,
-                                                                        telepon:
-                                                                            phoneNumController.text);
-
-                                                                    memberBloc.add(
-                                                                        EditMember(
-                                                                            member:
-                                                                                member));
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop(); // Close the dialog
-                                                                  },
-                                                                );
-                                                              },
-                                                            );
-                                                          },
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 16),
-                                                        CoolButton(
-                                                          text: "Delete",
-                                                          color: Colors.red,
-                                                          onTap: () {
-                                                            memberBloc.add(
-                                                                DeleteMember(
-                                                                    id: members[
-                                                                            index]
-                                                                        .id));
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop(); // Close the dialog
-                                                          },
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                        icon: Icon(
-                                          Icons.settings,
-                                          color: themeColor,
-                                        )),
-                                    IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MemberProfile(
-                                                          index: index)));
-                                        },
-                                        icon: Icon(
-                                          Icons.info_outline,
-                                          color: themeColor,
-                                        ))
-                                  ],
-                                ),
-
-                                //member name
-                              ])
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            );
-          } else if (memberState is MemberError) {
-            return Center(
-              child: Text(memberState.error),
-            );
+      child: BlocListener<MemberBloc, MemberState>(
+        listener: (context, state) {
+          if (state is MemberAdded) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(mySnackBar("Member added successfully!"));
           }
-          return const SizedBox(
-            child: Text("Failed"),
-          );
         },
+        child: BlocBuilder<MemberBloc, MemberState>(
+          builder: (context, memberState) {
+            if (memberState is MemberInitial ||
+                memberState is MemberAdded ||
+                memberState is MemberDeleted ||
+                memberState is MemberEdited) {
+              BlocProvider.of<MemberBloc>(context).add(LoadMember());
+            } else if (memberState is MemberLoading) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: themeColor,
+                ),
+              );
+            } else if (memberState is MemberLoaded) {
+              final members = memberState.members;
+
+              return Scaffold(
+                backgroundColor: white,
+                appBar: AppBar(
+                  backgroundColor: themeColor,
+                  automaticallyImplyLeading: false,
+                  title: MyText(
+                      child: "Members",
+                      fontSize: 18,
+                      color: white,
+                      fontWeight: FontWeight.w700),
+                ),
+                floatingActionButton: FloatingActionButton(
+                    backgroundColor: themeColor,
+                    hoverColor: themeColor,
+                    child: Icon(
+                      Icons.add,
+                      color: white,
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return MemberButton(
+                            title: "Add Member",
+                            addressController: addressController,
+                            nameController: nameController,
+                            phoneNumController: phoneNumController,
+                            idNumController: idNumController,
+                            birthDateController: birthDateController,
+                            onPressed: () {
+                              Member member = Member(
+                                  nomor_induk:
+                                      int.tryParse(idNumController.text) ?? 0,
+                                  nama: nameController.text,
+                                  alamat: addressController.text,
+                                  tgl_lahir: birthDateController.text,
+                                  telepon: phoneNumController.text);
+
+                              memberBloc.add(AddMember(member: member));
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                          );
+                        },
+                      );
+                    }),
+                body: ListView.builder(
+                  itemCount: members.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: white,
+                          border: Border.all(color: themeColor),
+                          borderRadius: BorderRadius.circular(8)),
+                      width: 280,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          children: [
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        members[index].nama,
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: themeColor,
+                                        ),
+                                      ),
+                                      //member nomor_induk
+
+                                      //member telepon
+                                      MyText(
+                                        child: members[index].telepon,
+                                        fontSize: 12,
+                                        color: themeColor,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Dialog(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              16.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          MyText(
+                                                            child:
+                                                                "Member Actions",
+                                                            fontSize: 18,
+                                                            color: themeColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 24),
+                                                          CoolButton(
+                                                            text: 'Edit',
+                                                            color:
+                                                                Colors.yellow,
+                                                            onTap: () {
+                                                              setState(() {
+                                                                addressController
+                                                                        .text =
+                                                                    members[index]
+                                                                        .alamat;
+                                                                nameController
+                                                                        .text =
+                                                                    members[index]
+                                                                        .nama;
+                                                                phoneNumController
+                                                                        .text =
+                                                                    members[index]
+                                                                        .telepon;
+                                                                idNumController
+                                                                    .text = members[
+                                                                        index]
+                                                                    .nomor_induk
+                                                                    .toString();
+                                                                birthDateController
+                                                                    .text = members[
+                                                                        index]
+                                                                    .tgl_lahir;
+                                                              });
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (BuildContext
+                                                                        context) {
+                                                                  return MemberButton(
+                                                                    title:
+                                                                        "Edit",
+                                                                    addressController:
+                                                                        addressController,
+                                                                    nameController:
+                                                                        nameController,
+                                                                    phoneNumController:
+                                                                        phoneNumController,
+                                                                    idNumController:
+                                                                        idNumController,
+                                                                    birthDateController:
+                                                                        birthDateController,
+                                                                    onPressed:
+                                                                        () {
+                                                                      Member member = Member(
+                                                                          status_aktif:
+                                                                              1,
+                                                                          id: members[index]
+                                                                              .id,
+                                                                          nomor_induk: int.tryParse(idNumController.text) ??
+                                                                              0,
+                                                                          nama: nameController
+                                                                              .text,
+                                                                          alamat: addressController
+                                                                              .text,
+                                                                          tgl_lahir: birthDateController
+                                                                              .text,
+                                                                          telepon:
+                                                                              phoneNumController.text);
+
+                                                                      memberBloc.add(EditMember(
+                                                                          member:
+                                                                              member));
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop(); // Close the dialog
+                                                                    },
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 16),
+                                                          CoolButton(
+                                                            text: "Delete",
+                                                            color: Colors.red,
+                                                            onTap: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                              showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (BuildContext
+                                                                          context) {
+                                                                    return DeleteModal(
+                                                                        onTap:
+                                                                            () {
+                                                                      memberBloc.add(
+                                                                          DeleteMember(
+                                                                              id: members[index].id));
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                    });
+                                                                  });
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                          },
+                                          icon: Icon(
+                                            Icons.settings,
+                                            color: themeColor,
+                                          )),
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MemberProfile(
+                                                            index: index)));
+                                          },
+                                          icon: Icon(
+                                            Icons.info_outline,
+                                            color: themeColor,
+                                          ))
+                                    ],
+                                  ),
+
+                                  //member name
+                                ])
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else if (memberState is MemberError) {
+              return Center(
+                child: Text(memberState.error),
+              );
+            }
+            return const SizedBox(
+              child: Text("Failed"),
+            );
+          },
+        ),
       ),
     );
   }

@@ -13,12 +13,8 @@ class TransactionDatasource {
       headers: {"Authorization": "Bearer ${_localStorage.read("token")}"});
 
   Future<TransactionData> getTransaction(int? id) async {
-    try {
-      final response = await _dio.get('/tabungan/$id', options: _auth);
-      return TransactionData.fromJson(response.data);
-    } on DioException catch (e) {
-      throw Exception(e.error);
-    }
+    final response = await _dio.get('/tabungan/$id', options: _auth);
+    return TransactionData.fromJson(response.data);
   }
 
   Future<Saldo> getSavings(int id) async {
@@ -27,52 +23,36 @@ class TransactionDatasource {
   }
 
   Future addTransaction(int memberId, transactionId, amount) async {
-    try {
-      final response = await _dio.post('/tabungan',
-          data: {
-            "anggota_id": memberId,
-            "trx_id": transactionId,
-            "trx_nominal": amount
-          },
-          options: _auth);
+    final response = await _dio.post('/tabungan',
+        data: {
+          "anggota_id": memberId,
+          "trx_id": transactionId,
+          "trx_nominal": amount
+        },
+        options: _auth);
 
-      return response;
-    } on DioException catch (e) {
-      throw Exception(e.error);
-    }
+    return response;
   }
 
   Future<DataBunga> getBunga() async {
-    try {
-      final response = await _dio.get('/settingbunga', options: _auth);
-      return DataBunga.fromJson(response.data);
-    } on DioException catch (e) {
-      throw Exception(e.error);
-    }
+    final response = await _dio.get('/settingbunga', options: _auth);
+    return DataBunga.fromJson(response.data);
   }
 
   Future<ActiveBunga> getActiveBunga() async {
-    try {
-      final response = await _dio.get('/settingbunga', options: _auth);
-      return ActiveBunga.fromModel(response.data);
-    } on DioException catch (e) {
-      throw Exception(e.message);
-    }
+    final response = await _dio.get('/settingbunga', options: _auth);
+    return ActiveBunga.fromModel(response.data);
   }
 
   Future addInterest(Bunga bunga) async {
-    try {
-      final response = await _dio.post('/addsettingbunga',
-          data: {
-            'id': bunga.id,
-            'persen': bunga.persen,
-            'isaktif': bunga.isaktif
-          },
-          options: _auth);
+    final response = await _dio.post('/addsettingbunga',
+        data: {
+          'id': bunga.id,
+          'persen': bunga.persen,
+          'isaktif': bunga.isaktif
+        },
+        options: _auth);
 
-      return response;
-    } on DioException catch (e) {
-      throw Exception(e.message);
-    }
+    return response;
   }
 }

@@ -19,110 +19,77 @@ class RemoteDataSource {
   }
 
   Future<DataMember> getMembersById(int id) async {
-    try {
-      final response = await _dio.get('/anggota/$id',
-          options: Options(headers: {
-            "Authorization": "Bearer ${_localStorage.read("token")}"
-          }));
-      return DataMember.fromJson(response.data);
-    } on DioException catch (e) {
-      throw Exception(e.message);
-    }
+    final response = await _dio.get('/anggota/$id',
+        options: Options(headers: {
+          "Authorization": "Bearer ${_localStorage.read("token")}"
+        }));
+    return DataMember.fromJson(response.data);
   }
 
   Future addMember(Member member) async {
-    try {
-      final response = await _dio.post('/anggota',
-          data: {
-            "nomor_induk": member.nomor_induk,
-            "nama": member.nama,
-            "alamat": member.alamat,
-            "tgl_lahir": member.tgl_lahir,
-            "telepon": member.telepon
-          },
-          options: Options(headers: {
-            "Authorization": "Bearer ${_localStorage.read("token")}"
-          }));
+    final response = await _dio.post('/anggota',
+        data: {
+          "nomor_induk": member.nomor_induk,
+          "nama": member.nama,
+          "alamat": member.alamat,
+          "tgl_lahir": member.tgl_lahir,
+          "telepon": member.telepon
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${_localStorage.read("token")}"
+        }));
 
-      return response;
-    } catch (e) {
-      print(e.toString());
-    }
+    return response;
   }
 
   Future deleteMember(int? id) async {
-    try {
-      return await _dio.delete("/anggota/$id",
-          options: Options(headers: {
-            "Authorization": "Bearer ${_localStorage.read("token")}"
-          }));
-    } on DioException catch (e) {
-      print(e.message);
-    }
+    return await _dio.delete("/anggota/$id",
+        options: Options(headers: {
+          "Authorization": "Bearer ${_localStorage.read("token")}"
+        }));
   }
 
   Future editMember(Member member) async {
-    try {
-      return await _dio.put("/anggota/${member.id}",
-          data: {
-            "nomor_induk": member.nomor_induk,
-            "nama": member.nama,
-            "alamat": member.alamat,
-            "tgl_lahir": member.tgl_lahir,
-            "telepon": member.telepon
-          },
-          options: Options(headers: {
-            "Authorization": "Bearer ${_localStorage.read("token")}"
-          }));
-    } on DioException catch (e) {
-      print(e.message);
-    }
+    return await _dio.put("/anggota/${member.id}",
+        data: {
+          "nomor_induk": member.nomor_induk,
+          "nama": member.nama,
+          "alamat": member.alamat,
+          "tgl_lahir": member.tgl_lahir,
+          "telepon": member.telepon
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${_localStorage.read("token")}"
+        }));
   }
 
   Future goLogin(String email, String password) async {
-    try {
-      final response = await _dio
-          .post('/login', data: {"email": email, "password": password});
+    final response =
+        await _dio.post('/login', data: {"email": email, "password": password});
 
-      print(response.data);
-      _localStorage.write('token', response.data['data']['token']);
+    _localStorage.write('token', response.data['data']['token']);
 
-      return response;
-    } on DioException catch (e) {
-      print(e.message);
-    }
+    return response;
   }
 
   Future goRegister(User user, String password) async {
-    try {
-      final response = await _dio.post('/register',
-          data: {"email": user.email, "name": user.name, "password": password});
-      print(response.data);
+    final response = await _dio.post('/register',
+        data: {"email": user.email, "name": user.name, "password": password});
+    print(response.data);
 
-      return response;
-    } on DioException catch (e) {
-      print(e.message);
-    }
+    return response;
   }
 
   Future<User> goUser() async {
-    try {
-      final response = await _dio.get('/user',
-          options: Options(headers: {
-            'Authorization': 'Bearer ${_localStorage.read('token')}'
-          }));
+    final response = await _dio.get('/user',
+        options: Options(headers: {
+          'Authorization': 'Bearer ${_localStorage.read('token')}'
+        }));
 
-      return User.fromModel(response.data);
-    } on DioException catch (e) {
-      throw Exception(e.error);
-    }
+    return User.fromModel(response.data);
   }
 
   Future goLogout() async {
-    try {
-      return await _dio.get('/logout', options: _auth);
-    } on DioException catch (e) {
-      print(e.message);
-    }
+    return await _dio.get('/logout', options: _auth);
   }
 }
