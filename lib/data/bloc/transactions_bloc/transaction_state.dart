@@ -17,12 +17,12 @@ final class SavingLoaded extends TransactionState {
 
 final class TransactionLoaded extends TransactionState {
   final List<Transaction> transactions;
-  final Saldo savings;
+  final int savings;
 
   TransactionLoaded(this.transactions, this.savings);
 }
 
 final class TransactionError extends TransactionState {
-  final String error;
+  final String? error;
   TransactionError(this.error);
 }

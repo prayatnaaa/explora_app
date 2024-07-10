@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class TransactionData {
   final List<Transaction> transactions;
 
@@ -34,4 +36,34 @@ class Saldo {
   factory Saldo.fromJson(Map<String, dynamic> json) {
     return Saldo(saldo: json['data']['saldo']);
   }
+}
+
+class TransactionType {
+  final int id;
+  final String type;
+  final int multiply;
+  final IconData icon;
+
+  TransactionType({
+    required this.id,
+    required this.type,
+    required this.multiply,
+    required this.icon,
+  });
+
+  static final List<TransactionType> transactionsType = [
+    // TransactionType(
+    //     id: 1, type: "Saldo Awal", multiply: 1, icon: Icons.account_balance),
+    TransactionType(id: 2, type: "Simpanan", multiply: 1, icon: Icons.savings),
+    TransactionType(
+        id: 3, type: "Penarikan", multiply: -1, icon: Icons.money_off),
+    // TransactionType(id: 4, type: "Bunga Simpanan", multiply: 1, icon: Icons.interest),
+    TransactionType(
+        id: 5, type: "Koreksi Penambahan", multiply: 1, icon: Icons.add_circle),
+    TransactionType(
+        id: 6,
+        type: "Koreksi Pengurangan",
+        multiply: 1,
+        icon: Icons.remove_circle),
+  ];
 }

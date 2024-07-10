@@ -24,7 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final result = await remoteDataSource.goUser();
       emit(UserLoaded(result));
     } on DioException catch (e) {
-      emit(UserError(message: e.message.toString()));
+      emit(UserError(message: e.message));
     }
   }
 
@@ -42,7 +42,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await remoteDataSource.goLogout();
       emit(UserExit());
     } on DioException catch (e) {
-      emit(UserError(message: e.toString()));
+      emit(UserError(message: e.message));
     }
   }
 
@@ -52,7 +52,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       await remoteDataSource.goRegister(event.user, event.password);
       emit(UserRegistered());
     } on DioException catch (e) {
-      emit(UserError(message: e.message.toString()));
+      emit(UserError(message: e.message));
     }
   }
 }

@@ -11,33 +11,41 @@ part 'interest_event.dart';
 part 'interest_state.dart';
 
 class InterestBloc extends Bloc<InterestEvent, InterestState> {
-  final TransactionDatasource transactionDatasource;
-  InterestBloc({required this.transactionDatasource})
-      : super(InterestInitial()) {
-    on<LoadInterest>(_loadInterest);
-    on<AddInterest>(_addInterest);
+  final TransactionDatasource remoteDataSource;
+
+  InterestBloc({required this.remoteDataSource}) : super(InterestInitial()) {
+    on<LoadBunga>(_loadBunga);
+    on<AddBunga>(_addBunga);
+    on<InitBunga>(_initBunga);
   }
 
-  FutureOr<void> _loadInterest(
-      LoadInterest event, Emitter<InterestState> emit) async {
+  void _loadBunga(LoadBunga event, Emitter<InterestState> emit) async {
     emit(InterestLoading());
     try {
-      final result = await transactionDatasource.getBunga();
-      final currentBunga = await transactionDatasource.getActiveBunga();
-      emit(InterestLoaded(bunga: result.bungas, currentBunga: currentBunga));
-    } on DioException catch (e) {
-      throw Exception(e.message);
+      final result = await remoteDataSource.getBunga();
+      if (result == null) {
+        emit(BungaLoaded(const [], Bunga(id: 1, persen: 0, isActive: 0)));
+      } else {
+        emit(BungaLoaded(result.listBunga, result.activeBunga));
+      }
+    } on DioException catch (error) {
+      emit(BungaError(error.message.toString()));
     }
   }
 
-  FutureOr<void> _addInterest(
-      AddInterest event, Emitter<InterestState> emit) async {
+  void _addBunga(AddBunga event, Emitter<InterestState> emit) async {
+    emit(InterestLoading());
     try {
-      final result = await transactionDatasource.addInterest(event.bunga);
-
-      emit(InterestAdded());
-    } on DioException catch (e) {
-      throw Exception(e.message);
+      await remoteDataSource.addBunga(event.bunga);
+      emit(BungaAdded());
+    } on DioException catch (error) {
+      emit(BungaError(
+        error.response?.data,
+      ));
     }
+  }
+
+  void _initBunga(InitBunga event, Emitter<InterestState> emit) async {
+    emit(InterestInitial());
   }
 }

@@ -7,35 +7,22 @@ class NullData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
         child: Column(
       children: [
-        const SizedBox(
-          height: 50,
-        ),
-        Icon(
-          Icons.no_accounts_outlined,
-          color: themeColor,
-          size: 200,
-        ),
-        const SizedBox(
+        SizedBox(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const MyText(
-                child: "You didn't have any member yet! ",
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.normal),
-            MyText(
-                child: "Create here",
-                fontSize: 18,
-                color: themeColor,
-                fontWeight: FontWeight.w600)
-          ],
-        )
+        Image(
+          image: AssetImage('assets/empty.png'),
+          width: 250,
+          height: 250,
+        ),
+        MyText(
+            child: "No data yet!",
+            fontSize: 16,
+            color: Colors.black,
+            fontWeight: FontWeight.w600)
       ],
     ));
   }

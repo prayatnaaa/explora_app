@@ -7,10 +7,17 @@ final class InterestInitial extends InterestState {}
 
 final class InterestLoading extends InterestState {}
 
-final class InterestLoaded extends InterestState {
-  final List<Bunga> bunga;
-  final ActiveBunga currentBunga;
-  InterestLoaded({required this.bunga, required this.currentBunga});
+final class BungaLoaded extends InterestState {
+  final List<Bunga> listBunga;
+  final Bunga activeBunga;
+
+  BungaLoaded(this.listBunga, this.activeBunga);
 }
 
-final class InterestAdded extends InterestState {}
+final class BungaError extends InterestState {
+  final String errorDescription;
+
+  BungaError(this.errorDescription);
+}
+
+final class BungaAdded extends InterestState {}

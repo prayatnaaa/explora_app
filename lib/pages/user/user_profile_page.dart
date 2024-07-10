@@ -55,17 +55,15 @@ class _UserProfilePageState extends State<UserProfilePage>
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30),
-        child: Align(
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              Text(
-                userName,
-                style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
-              ),
-              Text(userEmail)
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              userName,
+              style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+            ),
+            Text(userEmail)
+          ],
         ),
       ),
     );

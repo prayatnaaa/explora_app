@@ -6,19 +6,25 @@ class MyText extends StatelessWidget {
   final double fontSize;
   final FontWeight? fontWeight;
   final Color? color;
+  final TextOverflow? overflow;
+  final int? maxLines;
   const MyText(
       {super.key,
       required this.child,
       required this.fontSize,
       required this.color,
-      required this.fontWeight});
+      required this.fontWeight,
+      this.overflow,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       child,
-      style: GoogleFonts.montserrat(
+      style: GoogleFonts.poppins(
           fontSize: fontSize, fontWeight: fontWeight, color: color),
+      overflow: overflow,
+      maxLines: maxLines,
     );
   }
 }

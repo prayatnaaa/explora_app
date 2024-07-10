@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:explora_app/components/text.dart';
@@ -52,11 +53,12 @@ class _LoginPageState extends State<LoginPage> {
       child: BlocListener<UserBloc, UserState>(
         listener: (context, userState) {
           if (userState is UserLogged) {
-            Navigator.pushReplacementNamed(context, '/main');
+            context.go("/user");
           }
           if (userState is UserError) {
+            final message = userState.message;
             ScaffoldMessenger.of(context)
-                .showSnackBar(mySnackBar("Something went wrong", Colors.red));
+                .showSnackBar(mySnackBar(message.toString(), Colors.red));
           }
         },
         child: BlocBuilder<UserBloc, UserState>(
@@ -68,23 +70,20 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 50),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Welcome back",
-                              style: GoogleFonts.poppins(
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      Column(
+                        children: [
+                          Text(
+                            "Welcome back",
+                            style: GoogleFonts.poppins(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(
-                              "Sign in to access your account",
-                              style: GoogleFonts.montserrat(fontSize: 14),
-                            ),
-                          ],
-                        ),
+                          ),
+                          Text(
+                            "Sign in to access your account",
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 50),
                       MyTextField(
@@ -176,8 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                           onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/register');
+                            context.go("/register");
                           },
                         ),
                       ),

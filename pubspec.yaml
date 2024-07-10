@@ -42,6 +42,8 @@ dependencies:
   google_fonts: ^6.2.1
   provider: null
   intl: ^0.19.0
+  shimmer: ^3.0.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -71,6 +73,7 @@ flutter:
     - assets/tree.png
     - assets/map.png
     - assets/cat.png
+    - assets/empty.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

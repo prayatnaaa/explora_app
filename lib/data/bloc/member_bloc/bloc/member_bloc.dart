@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:explora_app/data/datasources/member_datasource.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
   final RemoteDataSource remoteDataSource;
   MemberBloc({required this.remoteDataSource}) : super(MemberInitial()) {
     on<LoadMember>(_loadMember);
+    on<LoadMemberById>(_loadMemberById);
     on<AddMember>(_addMember);
     on<DeleteMember>(_deleteMember);
     on<EditMember>(_editMember);
@@ -49,6 +52,17 @@ class MemberBloc extends Bloc<MemberEvent, MemberState> {
     try {
       await remoteDataSource.deleteMember(event.id);
       emit(MemberDeleted());
+    } on DioException catch (err) {
+      emit(MemberError(err.toString()));
+    }
+  }
+
+  FutureOr<void> _loadMemberById(
+      LoadMemberById event, Emitter<MemberState> emit) async {
+    emit(MemberLoading());
+    try {
+      final result = await remoteDataSource.getMembersById(event.id);
+      emit(MemberLoadedById(result));
     } on DioException catch (err) {
       emit(MemberError(err.toString()));
     }

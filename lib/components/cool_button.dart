@@ -7,13 +7,15 @@ class CoolButton extends StatefulWidget {
   final Color color;
   final VoidCallback? onTap;
   Color? textColor = Colors.white;
+  Color? fillColor = Colors.white;
 
   CoolButton(
       {super.key,
       required this.text,
       required this.color,
       required this.onTap,
-      this.textColor});
+      this.textColor,
+      this.fillColor});
 
   @override
   State<CoolButton> createState() => _CoolButtonState();
@@ -25,15 +27,14 @@ class _CoolButtonState extends State<CoolButton> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        width: 150,
-        height: 50,
+        width: double.infinity,
         decoration: BoxDecoration(
-            color: white,
+            color: widget.fillColor,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: widget.color)),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(28, 10, 28, 10),
+            padding: const EdgeInsets.all(10),
             child: Text(
               widget.text,
               style: GoogleFonts.montserrat(

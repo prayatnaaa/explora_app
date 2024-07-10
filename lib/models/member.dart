@@ -36,3 +36,38 @@ class Member {
       image_url: json['image_url'],
       status_aktif: json['id']);
 }
+
+class MemberDetail {
+  final int id;
+  final int nomor_induk;
+  final String nama;
+  final String alamat;
+  final String tglLahir;
+  final String telepon;
+  final String? imageUrl;
+  final int? statusAktif;
+
+  MemberDetail({
+    required this.id,
+    required this.nomor_induk,
+    required this.nama,
+    required this.alamat,
+    required this.tglLahir,
+    required this.telepon,
+    this.imageUrl,
+    this.statusAktif,
+  });
+
+  factory MemberDetail.fromJson(Map<String, dynamic> json) {
+    return MemberDetail(
+      id: json['data']['anggota']['id'],
+      nomor_induk: json['data']['anggota']['nomor_induk'],
+      nama: json['data']['anggota']['nama'],
+      alamat: json['data']['anggota']['alamat'],
+      tglLahir: json['data']['anggota']['tgl_lahir'],
+      telepon: json['data']['anggota']['telepon'],
+      imageUrl: json['data']['anggota']['image_url'],
+      statusAktif: json['data']['anggota']['status_aktif'],
+    );
+  }
+}

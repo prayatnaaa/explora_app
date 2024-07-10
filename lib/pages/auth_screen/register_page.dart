@@ -1,6 +1,8 @@
+import 'package:explora_app/components/my_snackbar.dart';
 import 'package:explora_app/services/api_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:explora_app/components/text.dart';
@@ -56,16 +58,10 @@ class _RegisterPageState extends State<RegisterPage> {
       child: BlocListener<UserBloc, UserState>(
         listener: (context, userState) {
           if (userState is UserRegistered) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: Colors.green,
-              content: MyText(
-                child: "Welcome, registration completed!",
-                fontSize: 16,
-                color: white,
-                fontWeight: FontWeight.bold,
-              ),
-            ));
-            Navigator.pushReplacementNamed(context, "/login");
+            showCustomSnackBar(context, "Registration success!",
+                color: Colors.green, contentColor: white);
+            // Navigator.pushReplacementNamed(context, "/login");
+            context.go("/login");
           }
 
           if (userState is UserError) {
@@ -200,7 +196,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             ],
                           ),
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/login');
+                            // Navigator.pushReplacementNamed(context, '/login');
+                            context.go("/login");
                           },
                         ),
                       ),

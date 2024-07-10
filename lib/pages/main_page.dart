@@ -1,8 +1,15 @@
 import 'package:explora_app/contents/colors.dart';
+import 'package:explora_app/data/bloc/interest_bloc/interest_bloc.dart';
+import 'package:explora_app/data/bloc/member_bloc/bloc/member_bloc.dart';
+import 'package:explora_app/data/bloc/transactions_bloc/transaction_bloc.dart';
+import 'package:explora_app/data/bloc/user_bloc/user_bloc.dart';
+import 'package:explora_app/data/datasources/member_datasource.dart';
+import 'package:explora_app/data/datasources/transaction_datasource.dart';
 import 'package:explora_app/pages/members/member_page.dart';
 import 'package:explora_app/pages/transactions/interest_page.dart';
 import 'package:explora_app/pages/user/user_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 

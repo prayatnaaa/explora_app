@@ -26,14 +26,14 @@ class MemberSnippet extends StatelessWidget {
                 return const NullData();
               }
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemCount: members.length,
                   itemBuilder: (context, index) {
                     return Container(
+                      margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                           color: themeColor,
                           borderRadius: BorderRadius.circular(8)),

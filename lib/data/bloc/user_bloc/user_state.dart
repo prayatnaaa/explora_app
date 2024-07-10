@@ -20,7 +20,7 @@ final class UserRegistered extends UserState {}
 final class UserExit extends UserState {}
 
 final class UserError extends UserState {
-  final String message;
+  final String? message;
 
   UserError({required this.message});
 }

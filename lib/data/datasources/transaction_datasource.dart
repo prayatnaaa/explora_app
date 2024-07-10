@@ -34,24 +34,23 @@ class TransactionDatasource {
     return response;
   }
 
-  Future<DataBunga> getBunga() async {
-    final response = await _dio.get('/settingbunga', options: _auth);
+  Future getBunga() async {
+    final response = await _dio.get("/settingbunga", options: _auth);
+    if (response.data["data"]["activebunga"] == null) {
+      return null;
+    }
     return DataBunga.fromJson(response.data);
   }
 
-  Future<ActiveBunga> getActiveBunga() async {
-    final response = await _dio.get('/settingbunga', options: _auth);
-    return ActiveBunga.fromModel(response.data);
-  }
-
-  Future addInterest(Bunga bunga) async {
-    final response = await _dio.post('/addsettingbunga',
-        data: {
-          'id': bunga.id,
-          'persen': bunga.persen,
-          'isaktif': bunga.isaktif
-        },
-        options: _auth);
+  Future addBunga(Bunga bunga) async {
+    final response = await _dio.post(
+      "/addsettingbunga",
+      data: {
+        "persen": bunga.persen,
+        "isaktif": bunga.isActive,
+      },
+      options: _auth,
+    );
 
     return response;
   }

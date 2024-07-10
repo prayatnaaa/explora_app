@@ -12,6 +12,11 @@ final class MemberLoaded extends MemberState {
   MemberLoaded(this.members);
 }
 
+final class MemberLoadedById extends MemberState {
+  final MemberDetail memberDetail;
+  MemberLoadedById(this.memberDetail);
+}
+
 final class MemberAdded extends MemberState {}
 
 final class MemberEdited extends MemberState {}

@@ -24,9 +24,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     try {
       final result = await transactionDatasource.getTransaction(event.id);
       final savings = await transactionDatasource.getSavings(event.id);
-      emit(TransactionLoaded(result.transactions, savings));
+      emit(TransactionLoaded(result.transactions, savings.saldo));
     } on DioException catch (e) {
-      throw Exception(e.message);
+      emit(TransactionError(e.message));
     }
   }
 
@@ -35,11 +35,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     try {
       await transactionDatasource.addTransaction(
           event.memberId, event.transactionId, event.amount);
-      print("tes");
       emit(TransactionAdded());
-      print("halo");
     } on DioException catch (e) {
-      throw Exception(e.error);
+      emit(TransactionError(e.message));
     }
   }
 
@@ -49,7 +47,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       final result = await transactionDatasource.getSavings(event.id);
       emit(SavingLoaded(result));
     } on DioException catch (e) {
-      throw Exception(e.error);
+      emit(TransactionError(e.message));
     }
   }
 }

@@ -15,15 +15,19 @@ class RemoteDataSource {
         options: Options(headers: {
           "Authorization": "Bearer ${_localStorage.read("token")}"
         }));
+
+    print(response.data);
     return DataMember.fromJson(response.data);
   }
 
-  Future<DataMember> getMembersById(int id) async {
+  Future<MemberDetail> getMembersById(int id) async {
     final response = await _dio.get('/anggota/$id',
         options: Options(headers: {
           "Authorization": "Bearer ${_localStorage.read("token")}"
         }));
-    return DataMember.fromJson(response.data);
+
+    print(response.data);
+    return MemberDetail.fromJson(response.data);
   }
 
   Future addMember(Member member) async {
@@ -56,7 +60,8 @@ class RemoteDataSource {
           "nama": member.nama,
           "alamat": member.alamat,
           "tgl_lahir": member.tgl_lahir,
-          "telepon": member.telepon
+          "telepon": member.telepon,
+          "status_aktif": member.status_aktif
         },
         options: Options(headers: {
           "Authorization": "Bearer ${_localStorage.read("token")}"
@@ -75,7 +80,6 @@ class RemoteDataSource {
   Future goRegister(User user, String password) async {
     final response = await _dio.post('/register',
         data: {"email": user.email, "name": user.name, "password": password});
-    print(response.data);
 
     return response;
   }
